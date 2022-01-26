@@ -90,19 +90,77 @@ namespace xml
             var Birthday = document.Descendants(ns + "patientRole")
                         .Elements(ns + "patient")
                         .Elements(ns + "birthTime")
-                          .Select(n => n.Attribute("value").Value);
+                          .Select(n => n.Attribute("value").Value)
+                          .FirstOrDefault();
 
             var LanguageCode= document.Descendants(ns + "patientRole")
                                .Elements(ns + "patient")
                                .Elements(ns + "languageCommunication")
                                .Elements(ns + "languageCode")
-                               .Select(n => n.Attribute("code").Value);
+                               .Select(n => n.Attribute("code").Value)
+                               .FirstOrDefault();
 
 
             var gender = document.Descendants(ns + "patientRole")
                                .Elements(ns + "patient")
                                .Elements(ns + "administrativeGenderCode")
-                               .Select(n => n.Attribute("displayName").Value);
+                               .Select(n => n.Attribute("displayName").Value)
+                               .FirstOrDefault();
+
+
+
+
+            // Doctor
+
+
+            var RetrieveTime = document.Descendants(ns + "author")
+                               .Elements(ns + "time")                           
+                               .Select(n => n.Attribute("value").Value)
+                                .FirstOrDefault();
+
+            var id = document.Descendants(ns + "author")
+                                .Elements(ns+ "assignedAuthor")
+                                .Elements(ns + "id")
+                                 .Where(n => (string)n.Attribute("root") == "1.18")
+                                 .Select(n => n.Attribute("extension").Value) // get element's value
+                                  .FirstOrDefault();                    // select only first value, if an
+
+            var Amka = document.Descendants(ns + "author")
+                           .Elements(ns + "assignedAuthor")
+                           .Elements(ns + "id")
+                            .Where(n => (string)n.Attribute("root") == "1.19")
+                            .Select(n => n.Attribute("extension").Value) // get element's value
+                             .FirstOrDefault();
+            var Etaa = document.Descendants(ns + "author")
+                           .Elements(ns + "assignedAuthor")
+                           .Elements(ns + "id")
+                            .Where(n => (string)n.Attribute("root") == "1.20")
+                            .Select(n => n.Attribute("extension").Value) // get element's value
+                             .FirstOrDefault();
+            var phone = document.Descendants(ns + "author")
+                          .Elements(ns + "assignedAuthor")
+                          .Elements(ns + "telecom")
+                           .Where(n => (string)n.Attribute("use") == "MC")
+                           .Select(n => n.Attribute("value").Value) // get element's value
+                            .FirstOrDefault();
+
+            var Email = document.Descendants(ns + "author")
+                          .Elements(ns + "assignedAuthor")
+                          .Elements(ns + "telecom")
+                           .Where(n => (string)n.Attribute("use") == "HP")
+                           .Select(n => n.Attribute("value").Value) // get element's value
+                            .FirstOrDefault();
+
+            var doctorname = document.Descendants(ns + "author")
+                         .Elements(ns + "assignedAuthor")
+                         .Elements(ns + "assignedPerson")
+                         .Elements(ns + "name")
+                     .Select(d => new Fullname
+                     {
+                         firstname = (string)d.Element(ns + "given"),
+                         lastname = (string)d.Element(ns + "family"),
+                     });
+
 
 
             var a = 1;
