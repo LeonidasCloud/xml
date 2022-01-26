@@ -10,11 +10,11 @@ namespace xml
     {
         static void Main(string[] args)
         {
-            //string workingDirectory = Environment.CurrentDirectory;
-            //string path = Path.Combine(Directory.GetParent(workingDirectory).Parent.FullName, @"test\", @"test.xml");
+            string workingDirectory = Environment.CurrentDirectory;
+            string path = Path.Combine(Directory.GetParent(workingDirectory).Parent.FullName, @"test\", @"test.xml");
 
             XDocument document = XDocument.Load
-                (@"C:\Users\bullet\source\repos\xml\xml\test\test.xml");
+                (path);
             XNamespace ns = "urn:hl7-org:v3";
 
             var amka = document.Descendants(ns + "patientRole")
