@@ -71,15 +71,49 @@ namespace xml
                         State = (string)d.Element(ns + "state")
                     });
 
+            var Phone = document.Descendants(ns + "patientRole")
+                                  .Elements(ns + "telecom")
+                                  .Select(n => n.Attribute("value").Value) // get element's value
+                                   .FirstOrDefault();
+                                  
 
-             
+            var name = document.Descendants(ns + "patientRole")
+                        .Elements(ns + "patient")
+                        .Elements(ns + "name")
+                    .Select(d => new Fullname
+                    {
+                        firstname = (string)d.Element(ns + "given"),
+                        lastname = (string)d.Element(ns + "family"),
+                    });
 
 
+            var Birthday = document.Descendants(ns + "patientRole")
+                        .Elements(ns + "patient")
+                        .Elements(ns + "birthTime")
+                          .Select(n => n.Attribute("value").Value);
+
+            var LanguageCode= document.Descendants(ns + "patientRole")
+                               .Elements(ns + "patient")
+                               .Elements(ns + "languageCommunication")
+                               .Elements(ns + "languageCode")
+                               .Select(n => n.Attribute("code").Value);
+
+
+            var gender = document.Descendants(ns + "patientRole")
+                               .Elements(ns + "patient")
+                               .Elements(ns + "administrativeGenderCode")
+                               .Select(n => n.Attribute("displayName").Value);
 
 
             var a = 1;
 
 
+
+        }
+        public class Fullname
+        {
+            public string firstname { get; set; }
+            public string lastname { get; set; }
 
         }
         public class FullAddress
