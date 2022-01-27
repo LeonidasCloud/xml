@@ -58,39 +58,29 @@ namespace xml
 
 
                                 ,
-                                InsuranceLastUpdateDT = patie.Elements(ns + "id")
-                                                         .Where(n => (string)n.Attribute("root") == "1.30.1")
-                                                         .Select(n => n.Attribute("extension").Value)
-                                                         .FirstOrDefault()
-
-                                                          != null ?
+                                InsuranceLastUpdateDT = 
 
                                                         DateTime.ParseExact(
                                                           patie.Elements(ns + "id")
                                                          .Where(n => (string)n.Attribute("root") == "1.30.1")
                                                          .Select(n => n.Attribute("extension").Value)
-                                                         .FirstOrDefault()
+                                                         ?.FirstOrDefault() ?? "00010101120000"
                                                          , "yyyyMMdd", CultureInfo.InvariantCulture)
 
 
-                                                    :DateTime.MinValue
+                                                    
 
                                ,
-                                InsuranceExpirationDT = patie.Elements(ns + "id")
-                                                         .Where(n => (string)n.Attribute("root") == "1.30.2")
-                                                         .Select(n => n.Attribute("extension").Value)
-                                                         .FirstOrDefault()
-
-                                                         != null ?
+                                InsuranceExpirationDT = 
 
                                                        DateTime.ParseExact(
                                                           patie.Elements(ns + "id")
                                                          .Where(n => (string)n.Attribute("root") == "1.30.2")
                                                          .Select(n => n.Attribute("extension").Value)
-                                                         .FirstOrDefault()
+                                                         ?.FirstOrDefault() ?? "00010101120000"
                                                          , "yyyyMMdd", CultureInfo.InvariantCulture)
 
-                                                         :DateTime.MinValue
+                                                        
 
 
                                 ,
@@ -119,21 +109,17 @@ namespace xml
                                              .FirstOrDefault()
 
                                 
-                                ,Birthday =             patie.Elements(ns + "patient")
-                                                              .Elements(ns + "birthTime")
-                                                              .Select(n => n.Attribute("value").Value)
-                                                              .FirstOrDefault()
-                                                                     != null ?
+                                ,Birthday =             
 
 
                                                          DateTime.ParseExact(
                                                          patie.Elements(ns + "patient")
                                                               .Elements(ns + "birthTime")
                                                               .Select(n => n.Attribute("value").Value)
-                                                              .FirstOrDefault()
+                                                              ?.FirstOrDefault() ?? "00010101120000"
                                                             , "yyyyMMdd", CultureInfo.InvariantCulture)
 
-                                                         : DateTime.MinValue
+                                                         
 
                                 ,
                                 LanguageCode =patie.Elements(ns + "patient")
@@ -156,16 +142,13 @@ namespace xml
             var doctor = document.Descendants(ns + "author")
                         .Select(doc => new Doctor
                         {
-                            RetrieveTime =  doc.Elements(ns + "time")
-                                                .Select(n => n.Attribute("value").Value)
-                                                .FirstOrDefault()
-                                              !=null ?
+                            RetrieveTime = 
                                             DateTime.ParseExact(
                                               doc.Elements(ns + "time")
                                                 .Select(n => n.Attribute("value").Value)
-                                                .FirstOrDefault()
-                                                ,"yyyyMMdd", CultureInfo.InvariantCulture)
-                                           : DateTime.MinValue
+                                                ?.FirstOrDefault() ?? "00010101120000"
+                                                , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                           
 
                            ,
                             Id= doc.Elements(ns + "assignedAuthor")
@@ -284,38 +267,29 @@ namespace xml
 
 
                            ,
-                           TimeLow = vi.Elements(ns + "encompassingEncounter")
-                                                               .Elements(ns + "effectiveTime")
-                                                               .Elements(ns + "low")
-                                                               .Select(n => n.Attribute("value").Value)
-                                                               .FirstOrDefault()
-                                                               != null ?
+                           
+                           TimeLow = 
                                                  DateTime.ParseExact(
                                                           vi.Elements(ns + "encompassingEncounter")
                                                                .Elements(ns + "effectiveTime")
                                                                .Elements(ns + "low")
                                                                .Select(n => n.Attribute("value").Value)
-                                                               .FirstOrDefault()
+                                                               ?.FirstOrDefault() ?? "00010101120000"
                                                              , "yyyyMMddHHmmss", CultureInfo.InvariantCulture)
-                                                          : DateTime.MinValue
+                                                          
 
 
 
                             ,
-                           TimeHigh = vi.Elements(ns + "encompassingEncounter")
-                                                               .Elements(ns + "effectiveTime")
-                                                               .Elements(ns + "high")
-                                                               .Select(n => n.Attribute("value").Value)
-                                                               .FirstOrDefault()
-                                                               != null ? 
-                                                 DateTime.ParseExact(
+                          
+                                TimeHigh =                 DateTime.ParseExact(
                                                           vi.Elements(ns + "encompassingEncounter")
                                                                .Elements(ns + "effectiveTime")
                                                                .Elements(ns + "high")
                                                                .Select(n => n.Attribute("value").Value )
-                                                               .FirstOrDefault()
+                                                               ?.FirstOrDefault()?? "00010101120000"
                                                              , "yyyyMMddHHmmss", CultureInfo.InvariantCulture) 
-                                                          : DateTime.MinValue
+                                                          
                        }
                        );
 
