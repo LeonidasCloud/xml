@@ -286,7 +286,7 @@ namespace xml
                            ,
                            TimeLow = vi.Elements(ns + "encompassingEncounter")
                                                                .Elements(ns + "effectiveTime")
-                                                               .Elements(ns + "high")
+                                                               .Elements(ns + "low")
                                                                .Select(n => n.Attribute("value").Value)
                                                                .FirstOrDefault()
                                                                != null ?
