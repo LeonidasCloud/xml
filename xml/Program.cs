@@ -12,7 +12,7 @@ namespace xml
         static void Main(string[] args)
         {
             string workingDirectory = Environment.CurrentDirectory;
-            string path = Path.Combine(Directory.GetParent(workingDirectory).Parent.FullName, @"test\", @"test.xml");
+            string path = Path.Combine(Directory.GetParent(workingDirectory).Parent.Parent.FullName, @"test", @"test.xml");
 
             XDocument document = XDocument.Load
                 (path);
@@ -105,8 +105,9 @@ namespace xml
                                                 })
                                                   .FirstOrDefault()
                                 ,Phone= patie.Elements(ns + "telecom")
+                                              .Where(n => (string)n.Attribute("use") == "MC")
                                              .Select(n => n.Attribute("value").Value) // get element's value
-                                             .FirstOrDefault()
+                                             .FirstOrDefault()?.Replace("tel:+","")
 
                                 
                                 ,Birthday =             
@@ -134,58 +135,67 @@ namespace xml
                                                     .Select(n => n.Attribute("displayName").Value)
                                                     .FirstOrDefault()
 
+                                ,Email = patie.Elements(ns + "telecom")
+                                              .Where(n => (string)n.Attribute("use") == "HP")
+                                             .Select(n => n.Attribute("value").Value) // get element's value
+                                             .FirstOrDefault()?.Replace("mailto:", "")
                             }
-                              );
+                              )
+                            .FirstOrDefault();
 
 
 
             var doctor = document.Descendants(ns + "author")
                         .Select(doc => new Doctor
                         {
-                            RetrieveTime = 
+                            RetrieveTime =
                                             DateTime.ParseExact(
                                               doc.Elements(ns + "time")
                                                 .Select(n => n.Attribute("value").Value)
                                                 ?.FirstOrDefault() ?? "00010101120000"
                                                 , "yyyyMMdd", CultureInfo.InvariantCulture)
-                                           
+
 
                            ,
-                            Id= doc.Elements(ns + "assignedAuthor")
+                            Id = doc.Elements(ns + "assignedAuthor")
                                     .Elements(ns + "id")
                                     .Where(n => (string)n.Attribute("root") == "1.18")
-                                    .Select(n => n.Attribute("extension").Value) 
+                                    .Select(n => n.Attribute("extension").Value)
                                     .FirstOrDefault()
 
 
-                           ,Amka= doc.Elements(ns + "assignedAuthor")
+                           ,
+                            Amka = doc.Elements(ns + "assignedAuthor")
                                      .Elements(ns + "id")
                                      .Where(n => (string)n.Attribute("root") == "1.19")
-                                     .Select(n => n.Attribute("extension").Value) 
+                                     .Select(n => n.Attribute("extension").Value)
                                      .FirstOrDefault()
 
-                           
-                           ,Etaa=doc.Elements(ns + "assignedAuthor")
+
+                           ,
+                            Etaa = doc.Elements(ns + "assignedAuthor")
                                     .Elements(ns + "id")
                                     .Where(n => (string)n.Attribute("root") == "1.20")
                                     .Select(n => n.Attribute("extension").Value)
                                     .FirstOrDefault()
-                          
-                            ,Phone = doc.Elements(ns + "assignedAuthor")
+
+                            ,
+                            Phone = doc.Elements(ns + "assignedAuthor")
                                         .Elements(ns + "telecom")
                                         .Where(n => (string)n.Attribute("use") == "MC")
-                                        .Select(n => n.Attribute("value").Value) 
-                                        .FirstOrDefault()
+                                        .Select(n => n.Attribute("value").Value)
+                                        .FirstOrDefault()?.Replace("tel:+", "")
 
 
 
-                           ,Email = doc.Elements(ns + "assignedAuthor")
+                           ,
+                            Email = doc.Elements(ns + "assignedAuthor")
                                         .Elements(ns + "telecom")
                                         .Where(n => (string)n.Attribute("use") == "HP")
                                         .Select(n => n.Attribute("value").Value) // get element's value
-                                        .FirstOrDefault()
+                                        .FirstOrDefault()?.Replace("mailto:",",")
                            ,
-                            fullname =      doc.Elements(ns + "assignedAuthor")
+                            fullname = doc.Elements(ns + "assignedAuthor")
                                                  .Elements(ns + "assignedPerson")
                                                 .Elements(ns + "name")
                                                 .Select(d => new Fullname
@@ -194,9 +204,10 @@ namespace xml
                                                     lastname = d.Element(ns + "family").Value,
                                                 })
                                                   .FirstOrDefault()
-                            
-                        
-                            ,AuthorProffession= doc.Elements(ns + "assignedAuthor")
+
+
+                            ,
+                            AuthorProffession = doc.Elements(ns + "assignedAuthor")
                                                     .Elements(ns + "id")
                                                     .Where(n => (string)n.Attribute("root") == "1.19.2")
                                                     .Select(n => n.Attribute("extension").Value)
@@ -216,13 +227,35 @@ namespace xml
                                                 })
                                                   .FirstOrDefault()
 
+                            ,
+                            UnitId = doc.Elements(ns + "assignedAuthor")
+                                        .Elements(ns + "representedOrganization")
+                                        .Elements(ns + "id")
+                                          .Where(n => (string)n.Attribute("root") == "1.80.1")
+                                                    .Select(n => n.Attribute("extension").Value)
+                                                    .FirstOrDefault()
 
-                        }
-                        );
+                          ,
+                            UnitName = doc.Elements(ns + "assignedAuthor")
+                                          .Elements(ns + "representedOrganization")
+                                          .Select(d => d.Element(ns +"name").Value)
+                                          .FirstOrDefault()
+                                         
 
 
-            var visit = document.Descendants(ns + "componentOf")
-                       .Select(vi => new Visit
+
+
+
+                        })
+                         .FirstOrDefault();
+
+
+                       
+                        
+
+
+            var appointment = document.Descendants(ns + "componentOf")
+                       .Select(vi => new Appointment
                        {
                             Id= vi.Elements(ns + "encompassingEncounter")
                                  .Elements(ns + "id")
@@ -283,7 +316,7 @@ namespace xml
                             ,
                           
                                 TimeHigh =                 DateTime.ParseExact(
-                                                          vi.Elements(ns + "encompassingEncounter")
+                                                          vi.Elements( "encompassingEncounter")
                                                                .Elements(ns + "effectiveTime")
                                                                .Elements(ns + "high")
                                                                .Select(n => n.Attribute("value").Value )
@@ -291,7 +324,56 @@ namespace xml
                                                              , "yyyyMMddHHmmss", CultureInfo.InvariantCulture) 
                                                           
                        }
-                       );
+                       )
+                       .FirstOrDefault();
+
+
+            var prescription = document.Descendants(ns + "component")
+                                        .Elements(ns + "structuredBody")
+                                        .Elements(ns + "component")
+                                        .Elements(ns + "section")
+                                        .Elements(ns + "entry")
+                                        .Elements(ns + "act")
+                                        .Where(n => (string)n.Attribute("classCode") == "INFRM")
+                                        .Select(vi => vi.Elements(ns + "statusCode")
+                                                       .Select(c => (string)c.Attribute("code"))
+                                                       .FirstOrDefault()
+                                                       ).FirstOrDefault();
+            //.Select(vi => new Prescription
+            //{
+            //    status=  vi.Elements("statusCode")
+            //                .Elements("entryRelationship")
+            //               .Select(c=> c.Element("code").Value)
+            //               .FirstOrDefault()
+
+
+
+            //});
+
+
+            //var medicine = document.Descendants(ns + "component")
+            //                        .Elements(ns + "structuredBody")
+            //                        .Elements(ns + "component")
+            //                        .Elements(ns + "section")
+            //                        .Elements(ns + "text")
+            //                         .Elements(ns + "list")
+            //                         .Elements(ns + "item")
+            //                        .Where(n => n.Attribute("ID").Value.StartsWith("med_barcode"))
+            //                         .Select(d => d.Value).ToList();
+            //  .Where(n => n.Attribute("ID").Value.StartsWith("med_barcode"))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             var a = 1;
@@ -300,6 +382,166 @@ namespace xml
 
         }
 
+
+        public class Prescription
+        {
+            public string status { get; set; }
+            public string time_low { get; set; }
+
+            public string time_high { get; set; }
+
+            public string prescription_id { get; set; }
+            public string type { get; set; }
+
+            public string duration_type { get; set; }
+
+            public string series { get; set; }
+
+            public string series_barcode { get; set; }
+
+            public string series_date { get; set; }
+
+            public string drug { get; set; }
+
+            public string drugCategory { get; set; }
+
+            public string desensitization_vaccine { get; set; }
+
+            public string single_dose { get; set; }
+
+            public string monthly { get; set; }
+
+            public string special_antibiotic { get; set; }
+            public string two_months { get; set; }
+
+            public string no_paper { get; set; }
+
+            public string portal_idika { get; set; }
+
+            public string heparin { get; set; }
+
+            public string drug_insert { get; set; }
+
+            public string ekas { get; set; }
+
+            public string chronic { get; set; }
+
+            public string hospital_eopy { get; set; }
+
+            public string ifet { get; set; }
+
+            public string out_of_cost { get; set; }
+
+            public string only_hospital { get; set; }
+
+            public string commercial_name { get; set; }
+
+            public string commercial_id { get; set; }
+
+
+            public string commercial_noteshigh_cost { get; set; }
+
+            public string vaccine { get; set; }
+
+            public string law_816 { get; set; }
+
+            public string pre_approval { get; set; }
+
+            public string extra_cost { get; set; }
+            public string eopy_ph_only { get; set; }
+            public string has_extra_cost { get; set; }
+            public string had_extra_cost { get; set; }
+
+            public string insurance_group { get; set; }
+            public string execution_no { get; set; }
+            public string has_opinion { get; set; }
+
+            public string opinion_date { get; set; }
+
+            public string opinion_doc_amka { get; set; }
+
+            public string opinion_doc_csp { get; set; }
+
+            public string opinion_doc_name { get; set; }
+
+           public string galenical { get; set; }
+
+            public string galenical_description { get; set; }
+
+            public string galenical_quantity { get; set; }
+
+            public string galenical_unit { get; set; }
+
+            public string prescription_notes { get; set; }
+
+            public string diagnosis_notes { get; set; }
+
+
+
+
+
+        }
+
+
+        public class ClinicalDocument
+        {
+            public Patient Patient { get; set; }
+            public Doctor Doctor { get; set; }
+            public Appointment Appointment { get; set; }
+            public List<Diagnosis> Diagnosis { get; set; }
+            public List<Medicine> Medicines { get; set; }
+        }
+
+        public class Diagnosis
+        {
+            public string Code { get; set; }
+            public string Name { get; set; }
+        }
+
+        public class Medicine
+        {
+            public string Barcode { get; set; }
+            public string Ingredients { get; set; }
+            public string Quantity { get; set; }
+            public string LineId { get; set; }
+            public string Instructions { get; set; }
+            public string FormName { get; set; }
+            public string FormCode { get; set; }
+            public string FormCapacity { get; set; }
+            public string Name { get; set; }
+            public string EofCode { get; set; }
+            public MedExecutionInfo ExecutionInfo { get; set; }
+            public List<SimilarMedicine> SimilarMedicines { get; set; }
+        }
+
+        public class MedExecutionInfo
+        {
+            public string ParticipationPerc { get; set; }
+            public string RemainingQty { get; set; }
+            public string ParticipationPrice { get; set; }
+            public string PatienceDifference { get; set; }
+            public string TotalDifference { get; set; }
+            public string SimilarListId { get; set; }
+            public string Genetic { get; set; }
+            public string RetailPrice { get; set; }
+            public string ReferencePrice { get; set; }
+            public string WholesalePrice { get; set; }
+            public string Hospital { get; set; }
+            public string PrGn { get; set; }
+            public string InCluster { get; set; }
+        }
+
+        public class SimilarMedicine
+        {
+            public string Barcode { get; set; }
+            public string Name { get; set; }
+            public string RetailPrice { get; set; }
+            public string ReferencePrice { get; set; }
+            public string Wholesaleprice { get; set; }
+            public string Hospital { get; set; }
+            public string PrGn { get; set; }
+            public string InCluster { get; set; }
+        }
         public class Patient
         {
 
@@ -343,7 +585,7 @@ namespace xml
         }
 
 
-        public class Visit
+        public class Appointment
         {
             public string Id { get; set; }
             public string UnitId { get; set; }
