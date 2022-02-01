@@ -17,6 +17,8 @@ namespace xml
             XDocument document = XDocument.Load
                 (path);
             XNamespace ns = "urn:hl7-org:v3";
+            XNamespace epsos = "urn:epsos-org:ep:medication";
+           
 
             var patient = document.Descendants(ns + "patientRole")
                             .Select(patie => new Patient
@@ -335,32 +337,432 @@ namespace xml
                                         .Elements(ns + "entry")
                                         .Elements(ns + "act")
                                         .Where(n => (string)n.Attribute("classCode") == "INFRM")
-                                        .Select(vi => vi.Elements(ns + "statusCode")
-                                                       .Select(c => (string)c.Attribute("code"))
-                                                       .FirstOrDefault()
-                                                       ).FirstOrDefault();
-            //.Select(vi => new Prescription
-            //{
-            //    status=  vi.Elements("statusCode")
-            //                .Elements("entryRelationship")
-            //               .Select(c=> c.Element("code").Value)
-            //               .FirstOrDefault()
+                                        .Select(Pr => new Prescription
+                                        {
+                                            status = Pr.Elements(ns + "statusCode")
+                                                           .Select(c => ((string)c.Attribute("code")=="new"? "Συνταγογραφημένη":
+                                                           ((string)c.Attribute("code") == "active")? "Μερικώς Εκτελεσμένη":
+                                                           ((string)c.Attribute("code") == "completed") ? "Εκτελεσμένη" :
+                                                           ((string)c.Attribute("code") == "cancelled") ? "Ακυρωμένη":null)
+                                                           )
+                                                           .FirstOrDefault()
+
+                                            
+                                           ,time_low = DateTime.ParseExact(
+                                                             Pr.Elements(ns + "effectiveTime")
+                                                             .Elements(ns + "low")
+                                                           .Select(c => (string)c.Attribute("value"))?
+                                                           .FirstOrDefault()??
+                                                                 "00010101120000"
+                                                             , "yyyyMMdd", CultureInfo.InvariantCulture)
 
 
 
-            //});
+                                           ,
+                                            time_high = DateTime.ParseExact(
+                                                             Pr.Elements(ns + "effectiveTime")
+                                                             .Elements(ns + "high")
+                                                           .Select(c => (string)c.Attribute("value"))?
+                                                           .FirstOrDefault() ??
+                                                                 "00010101"
+                                                             , "yyyyMMdd", CultureInfo.InvariantCulture)
 
 
-            //var medicine = document.Descendants(ns + "component")
-            //                        .Elements(ns + "structuredBody")
-            //                        .Elements(ns + "component")
-            //                        .Elements(ns + "section")
-            //                        .Elements(ns + "text")
-            //                         .Elements(ns + "list")
-            //                         .Elements(ns + "item")
-            //                        .Where(n => n.Attribute("ID").Value.StartsWith("med_barcode"))
-            //                         .Select(d => d.Value).ToList();
-            //  .Where(n => n.Attribute("ID").Value.StartsWith("med_barcode"))
+                                                           
+                                            ,prescription_id = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.22")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                            
+                                           , type = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.3")
+                                                                .Select(c => ((string)c.Attribute("extension")=="1")? "Τυπική" :
+                                                                             ((string)c.Attribute("extension") == "3")? "3μηνη":
+                                                                             ((string)c.Attribute("extension") == "4")? "4μηνη":
+                                                                             ((string)c.Attribute("extension") == "5")? "5μηνη": "6μηνη"
+                                                                )
+                                                                .FirstOrDefault()
+                                           
+                                           
+                                           , duration_type = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.4")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                                                 
+                                          
+                                           , series = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.4.1")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                          
+                                           
+                                            ,series_barcode = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.4.2")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+
+
+                                           , series_date = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.4.3")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                             
+                                           , drug = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.11")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                                
+                                           ,
+                                            drugCategory = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.11.1")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+
+                                           , desensitization_vaccine = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.8")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                             
+                                            
+                                            ,single_dose = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.4.11")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                               
+                                            
+                                           , monthly = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.4.9")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                             
+                                           , two_months = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.4.10")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+
+                                          ,
+                                            no_paper = Pr.Elements(ns + "id")
+                                                               .Where(n => (string)n.Attribute("root") == "1.5.10")
+                                                               .Select(c => (string)c.Attribute("extension"))
+                                                               .FirstOrDefault()
+
+
+
+
+                                            ,
+                                            portal_idika = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.40.1")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+
+                                            ,
+                                            heparin = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.30")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                            ,
+                                            special_antibiotic = Pr.Elements(ns + "id")
+                                                                .Where(n => (string)n.Attribute("root") == "1.1.13")
+                                                                .Select(c => (string)c.Attribute("extension"))
+                                                                .FirstOrDefault()
+                                            ,
+                                            ifet_insert = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.34")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                            
+                                           , ekas = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.10.4")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                           , chronic = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.10.9")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                           
+                                           
+                                           , hospital_eopy = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.10")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                           
+                                         ,   ifet = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.15")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                            
+                                           , out_of_cost = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.17")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                           
+                                           
+                                          ,  commercial_name = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.3.1")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+   
+                                            
+                                           , commercial_id = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.3.2")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+
+                                           
+                                          
+                                            ,commercial_notes = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.3.2")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                              
+                                            
+                                           , high_cost = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.7")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                           
+                                          
+                                            ,vaccine = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.24")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                                
+                                           
+                                           , law_816 = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.14")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+
+                                           
+                                           
+                                          , pre_approval = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.16")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                    
+                                            ,eopy_ph_only = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.9")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                           
+                                            
+                                            ,extra_cost = Pr.Elements(ns + "id")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.22")
+                                                                 .Select(c => (string)c.Attribute("extension"))
+                                                                 .FirstOrDefault()
+                                            
+                                            ,has_extra_cost = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.22.2")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault() 
+                                            
+                                            ,had_extra_cost = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.22.1")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                        
+                                           
+                                           , execution_no = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.19")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+
+                                           
+                                           
+                                           , has_opinion = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.23")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+                                              
+                                           
+                                           , opinion_date = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.23.2")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                              
+                                            
+                                            ,opinion_doc_amka = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.23.1")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                                            
+                                           
+                                           , opinion_doc_csp = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.23.4")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+                                            
+                                            ,opinion_doc_name = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.1.23.5")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                            
+                                            
+                                            ,galenical = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.7.1")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                                 
+                                            ,galenical_description = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.7.1.1")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                             
+                                            
+                                            ,galenical_quantity = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.7.1.15")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+
+                                                
+                                            ,
+                                            galenical_unit = Pr.Elements(ns + "id")
+                                                            .Where(n => (string)n.Attribute("root") == "1.7.1.16")
+                                                            .Select(c => (string)c.Attribute("extension"))
+                                                            .FirstOrDefault()
+                                            //,insurance_group = Pr.Elements(ns + "id")
+                                            //                .Where(n => (string)n.Attribute("root") == "1.1.22")
+                                            //                .Select(c => (string)c.Attribute("extension"))
+                                            //                .FirstOrDefault()
+
+
+                                        }
+                                        );
+
+
+
+            var medicine = document.Descendants(ns + "component")
+                                    .Elements(ns + "structuredBody")
+                                    .Elements(ns + "component")
+                                    .Elements(ns + "section")
+                                    .Elements(ns + "text")
+                                     .Elements(ns + "list")
+                                     .Elements(ns + "item")
+                                    .Where(n => n.Attribute("ID").Value.StartsWith("med_barcode"))
+                                     .Select(d => new Medicine
+                                     {
+                                         Barcode = d.Value
+                                        ,
+                                         NameId = d.Attribute("ID").Value
+                                     })
+                                     .ToList();
+            medicine.ForEach(
+
+                 x =>
+                 {
+                 var doc = document.Descendants(ns + "substanceAdministration")
+                                      .Where(z =>
+                                            z.Elements(ns + "consumable")
+                                             .Elements(ns + "manufacturedProduct")
+                                             .Elements(ns + "manufacturedMaterial")
+                                             .Elements(ns + "code")
+                                             .Elements(ns + "originalText")
+                                             .Elements(ns + "reference")
+                                             .Attributes("value")
+                                             .Any(f => f.Value.EndsWith(x.NameId))
+                                                         );
+                 var manufacturedMaterial = doc.Elements(ns + "consumable")
+                                               .Elements(ns + "manufacturedProduct")
+                                               .Elements(ns + "manufacturedMaterial");
+
+                 x.Quantity = doc.Elements(ns + "entryRelationship")
+                                 .Where(k => k.Attributes("typeCode")
+                                 .Any(z => z.Value == "COMP"))
+                                 .Elements(ns + "supply")
+                                 .Select(c => c.Element(ns + "quantity").Attribute("value").Value)
+                                 .FirstOrDefault();
+
+
+                 x.Ingredients = manufacturedMaterial.Select(i => i.Elements(epsos + "ingredient")
+                                                            .Elements(epsos + "ingredient")
+                                                            .Select(n => n.Element(epsos + "name").Value).FirstOrDefault())
+                                                             .FirstOrDefault();
+
+
+                 x.LineId = doc.Select(c => c.Element(ns + "id").Attribute("extension").Value).FirstOrDefault();
+
+                 x.Instructions = new Instructions {
+                                                       low=  doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "low").Attribute("value").Value).FirstOrDefault()
+                                                       ,high = doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "high").Attribute("value").Value).FirstOrDefault()
+
+
+                 };
+
+                  x.FormName = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                                                          .Elements(epsos + "containerPackagedMedicine")
+                                                          .Select(n => n.Element(epsos + "formCode").Attribute("displayName").Value).FirstOrDefault())
+                                                             .FirstOrDefault();
+
+
+                 x.FormCode = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                                                            .Elements(epsos + "containerPackagedMedicine")
+                                                            .Select(n => n.Element(epsos + "formCode").Attribute("code").Value).FirstOrDefault())
+                                                               .FirstOrDefault();
+
+                  x.FormCapacity = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                                                                              .Elements(epsos + "containerPackagedMedicine")
+                                                                              .Select(n => n.Element(epsos + "capacityQuantity").Attribute("value").Value).FirstOrDefault())
+                                                                                 .FirstOrDefault();
+
+
+
+
+                  x.Name = manufacturedMaterial.Select(i => i.Element(ns + "name").Value).FirstOrDefault();
+                                                            
+                   
+                  x.EofCode = manufacturedMaterial.Select(i => i.Element(ns + "code").Attribute("code").Value).FirstOrDefault();
+
+                 });
+
+
+
+
+
+
+            var asadsad = document.Descendants(ns + "substanceAdministration")
+                                      .Where(z =>
+                                            z.Elements(ns + "consumable")
+                                             .Elements(ns + "manufacturedProduct")
+                                             .Elements(ns + "manufacturedMaterial")
+                                             .Elements(ns + "code")
+                                             .Elements(ns + "originalText")
+                                             .Elements(ns + "reference")
+                                             .Attributes("value")
+                                             .Any(f => f.Value.EndsWith("med_barcode_1"))
+                                                         );
+
+            var low = asadsad.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "low").Attribute("value").Value).FirstOrDefault();
+                                               //        ,high = doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "high").Attribute("value").Value).FirstOrDefault()
+
+
+            //var aswe = asadsad.Elements(ns + "entryRelationship")
+            //                   .Where(k => k.Attributes("typeCode")
+            //                     .Any(z => z.Value == "COMP"));
+
+            //var asf = aswe.Elements(ns +"supply")
+            //                         .Select(c => c.Element(ns +"quantity").Attribute("value").Value)
+            //                         .FirstOrDefault();
+
+
+
+
+
+
+
 
 
 
@@ -383,12 +785,14 @@ namespace xml
         }
 
 
+        
+
         public class Prescription
         {
             public string status { get; set; }
-            public string time_low { get; set; }
+            public DateTime time_low { get; set; }
 
-            public string time_high { get; set; }
+            public DateTime time_high { get; set; }
 
             public string prescription_id { get; set; }
             public string type { get; set; }
@@ -420,7 +824,7 @@ namespace xml
 
             public string heparin { get; set; }
 
-            public string drug_insert { get; set; }
+            public string ifet_insert { get; set; }
 
             public string ekas { get; set; }
 
@@ -439,8 +843,8 @@ namespace xml
             public string commercial_id { get; set; }
 
 
-            public string commercial_noteshigh_cost { get; set; }
-
+            public string commercial_notes { get; set; }
+            public string high_cost { get; set; }
             public string vaccine { get; set; }
 
             public string law_816 { get; set; }
@@ -498,13 +902,22 @@ namespace xml
             public string Name { get; set; }
         }
 
+        public class Instructions
+        {
+            public string  low { get; set; }
+            public string high { get; set; }
+
+            public string Quantity { get; set; }
+        }
         public class Medicine
         {
+
+            public string NameId { get; set; }
             public string Barcode { get; set; }
             public string Ingredients { get; set; }
-            public string Quantity { get; set; }
+           
             public string LineId { get; set; }
-            public string Instructions { get; set; }
+            public Instructions Instructions { get; set; }
             public string FormName { get; set; }
             public string FormCode { get; set; }
             public string FormCapacity { get; set; }
