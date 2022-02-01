@@ -679,15 +679,17 @@ namespace xml
                                                .Elements(ns + "manufacturedProduct")
                                                .Elements(ns + "manufacturedMaterial");
 
-                 x.Quantity = doc.Elements(ns + "entryRelationship")
-                                 .Where(k => k.Attributes("typeCode")
-                                 .Any(z => z.Value == "COMP"))
-                                 .Elements(ns + "supply")
-                                 .Select(c => c.Element(ns + "quantity").Attribute("value").Value)
-                                 .FirstOrDefault();
+
+                     var Similardocs = doc.Elements(ns + "entryRelationship")
+                                       .Where(c => c.Attribute("typeCode").Value == "REFR"
+                                                && c.Element(ns + "act").Attribute("classCode").Value == "ACT");
+
+                     var medexc = doc.Elements(ns + "entryRelationship")
+                                   .Where(c => c.Attribute("typeCode").Value == "SPRT");
+               
 
 
-                 x.Ingredients = manufacturedMaterial.Select(i => i.Elements(epsos + "ingredient")
+                  x.Ingredients = manufacturedMaterial.Select(i => i.Elements(epsos + "ingredient")
                                                             .Elements(epsos + "ingredient")
                                                             .Select(n => n.Element(epsos + "name").Value).FirstOrDefault())
                                                              .FirstOrDefault();
@@ -726,6 +728,86 @@ namespace xml
                    
                   x.EofCode = manufacturedMaterial.Select(i => i.Element(ns + "code").Attribute("code").Value).FirstOrDefault();
 
+
+                 x.SimilarMedicines = Similardocs.Elements(ns + "act")
+                                       .Select(c =>
+                                        new SimilarMedicine
+                                        {
+
+                                            Barcode = c.Elements(ns + "id")
+                                                       .Where(c => c.Attribute("root").Value == "1.7.5.1")
+                                                       .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                           ,
+                                            Name = c.Elements(ns + "id")
+                                                       .Where(c => c.Attribute("root").Value == "1.7.5.2")
+                                                       .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+
+                                          ,
+                                            RetailPrice = c.Elements(ns + "id")
+                                                       .Where(c => c.Attribute("root").Value == "1.8.5.1")
+                                                       .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                                          ,
+                                            ReferencePrice = c.Elements(ns + "id")
+                                                       .Where(c => c.Attribute("root").Value == "1.8.5.2")
+                                                       .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                                           ,
+                                            Wholesaleprice = c.Elements(ns + "id")
+                                                               .Where(c => c.Attribute("root").Value == "1.8.5.3")
+                                                               .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+
+                                            ,
+                                            Hospital = c.Elements(ns + "id")
+                                                               .Where(c => c.Attribute("root").Value == "1.8.5.5")
+                                                               .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                            ,
+                                            PrGn = c.Elements(ns + "id")
+                                                               .Where(c => c.Attribute("root").Value == "1.9.6.1")
+                                                               .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+
+                                           ,
+                                            InCluster = c.Elements(ns + "id")
+                                                               .Where(c => c.Attribute("root").Value == "1.9.6.2")
+                                                               .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                        }
+                                             ).ToList();
+
+                     x.ExecutionInfo =
+                                        new MedExecutionInfo
+                                        {
+
+                                        ParticipationPerc = medexc.Elements(ns + "act")
+                                                            .Elements(ns + "id")
+                                                            .Where(c => c.Attribute("root").Value == "1.4.18")
+                                                            .Select(c=>c.Attribute("extension").Value).FirstOrDefault()
+                                        
+                                           , RemainingQty = medexc.Elements(ns + "act")
+                                                            .Elements(ns + "id")
+                                                            .Where(c => c.Attribute("root").Value == "1.4.19")
+                                                            .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+
+
+                                        };
+                                        
+                                        
+
+
+
+
                  });
 
 
@@ -745,8 +827,25 @@ namespace xml
                                              .Any(f => f.Value.EndsWith("med_barcode_1"))
                                                          );
 
-            var low = asadsad.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "low").Attribute("value").Value).FirstOrDefault();
-                                               //        ,high = doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "high").Attribute("value").Value).FirstOrDefault()
+            var Similardocs = asadsad.Elements(ns + "entryRelationship")
+                                   .Where(c => c.Attribute("typeCode").Value == "REFR"
+                                            && c.Element(ns +"act").Attribute("classCode").Value == "ACT");
+
+
+
+            var medexc = asadsad.Elements(ns + "entryRelationship")
+                                   .Where(c => c.Attribute("typeCode").Value == "SPRT")
+
+                                    .Elements(ns + "act")
+                                            .Elements(ns + "id")
+                                            .Where(c => c.Attribute("root").Value == "1.4.18")
+                                            .Select(c => c.Attribute("extension").Value).FirstOrDefault();
+
+
+
+
+
+            //        ,high = doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "high").Attribute("value").Value).FirstOrDefault()
 
 
             //var aswe = asadsad.Elements(ns + "entryRelationship")
