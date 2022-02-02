@@ -664,7 +664,7 @@ namespace xml
 
                  x =>
                  {
-                 var doc = document.Descendants(ns + "substanceAdministration")
+                     var doc = document.Descendants(ns + "substanceAdministration")
                                       .Where(z =>
                                             z.Elements(ns + "consumable")
                                              .Elements(ns + "manufacturedProduct")
@@ -675,7 +675,22 @@ namespace xml
                                              .Attributes("value")
                                              .Any(f => f.Value.EndsWith(x.NameId))
                                                          );
-                 var manufacturedMaterial = doc.Elements(ns + "consumable")
+
+
+
+                     var notes = document.Descendants(ns + "component")
+                                    .Elements(ns + "structuredBody")
+                                    .Elements(ns + "component")
+                                    .Elements(ns + "section")
+                                    .Elements(ns + "text")
+                                     .Elements(ns + "list")
+                                     .Elements(ns + "item")
+                                    .Where(n => n.Attribute("ID").Value.EndsWith("notes_"+x.NameId.Last()));
+
+
+
+
+                     var manufacturedMaterial = doc.Elements(ns + "consumable")
                                                .Elements(ns + "manufacturedProduct")
                                                .Elements(ns + "manufacturedMaterial");
 
@@ -684,27 +699,88 @@ namespace xml
                                        .Where(c => c.Attribute("typeCode").Value == "REFR"
                                                 && c.Element(ns + "act").Attribute("classCode").Value == "ACT");
 
+
                      var medexc = doc.Elements(ns + "entryRelationship")
                                    .Where(c => c.Attribute("typeCode").Value == "SPRT");
-               
 
 
-                  x.Ingredients = manufacturedMaterial.Select(i => i.Elements(epsos + "ingredient")
+
+
+                     var diagnosi = doc
+                                .Elements(ns + "entryRelationship")
+                                .Elements(ns + "act")
+                                .Elements(ns + "entryRelationship")
+                                .Elements(ns + "observation")
+                                .Elements(ns + "value")
+                                .Where(c => c.Attribute("codeSystem").Value == "1.3.6.1.4.1.12559.11.10.1.3.1.44.2");
+
+
+
+                 x.Ingredients = manufacturedMaterial.Select(i => i.Elements(epsos + "ingredient")
                                                             .Elements(epsos + "ingredient")
                                                             .Select(n => n.Element(epsos + "name").Value).FirstOrDefault())
                                                              .FirstOrDefault();
 
+                 x.notes = notes.Select(d => d.Value).FirstOrDefault();
 
                  x.LineId = doc.Select(c => c.Element(ns + "id").Attribute("extension").Value).FirstOrDefault();
 
-                 x.Instructions = new Instructions {
-                                                       low=  doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "low").Attribute("value").Value).FirstOrDefault()
-                                                       ,high = doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "high").Attribute("value").Value).FirstOrDefault()
+                 x.quantity = doc.Elements(ns + "entryRelationship").Elements(ns + "supply").Select(z => z.Element(ns + "quantity").Attribute("value").Value).FirstOrDefault();
+
+                     x.instructions =
+                            new instructions
+                            {
+
+                                effectiveTime = new effectiveTime
+                                {
+                                    value = doc.Elements(ns + "effectiveTime").Elements(ns + "period").Select(c=> c.Attribute("value").Value).FirstOrDefault()
+                                    ,unit= doc.Elements(ns + "effectiveTime").Elements(ns + "period").Select(c => c.Attribute("unit").Value).FirstOrDefault()
+
+                                }
+                     
+                             ,   doseQuantiy = new doseQuantiy
+                                {
+                                 high= new high
+                                   {
+                                       value= doc.Elements(ns + "doseQuantity").Elements(ns + "high").Select(c => c.Attribute("value").Value).FirstOrDefault()
+                                       
+                                     , unit= doc.Elements(ns + "doseQuantity").Elements(ns + "high").Select(c => c.Attribute("unit").Value).FirstOrDefault()
+                                 }
+
+                                 ,low = new low
+                                 {
+                                     value = doc.Elements(ns + "doseQuantity").Elements(ns + "low").Select(c => c.Attribute("value").Value).FirstOrDefault()
+
+                                     
+                                     ,unit = doc.Elements(ns + "doseQuantity").Elements(ns + "low").Select(c => c.Attribute("unit").Value).FirstOrDefault()
+                                 }
+                             }
+                     
+                               , period = new period
+                                {
+                                   high = new high
+                                   {
+                                       value = doc.Elements(ns + "rateQuantity").Elements(ns + "high").Select(c => c.Attribute("value").Value).FirstOrDefault()
+
+                                     ,  unit = doc.Elements(ns + "rateQuantity").Elements(ns + "high").Select(c => c.Attribute("unit").Value).FirstOrDefault()
+                                     
+                                   }
+
+                                 ,
+                                   low = new low
+                                   {
+                                       value = doc.Elements(ns + "rateQuantity").Elements(ns + "low").Select(c => c.Attribute("value").Value).FirstOrDefault()
+
+                                     ,
+                                       unit = doc.Elements(ns + "rateQuantity").Elements(ns + "low").Select(c => c.Attribute("unit").Value).FirstOrDefault()
+                                   }
+                               }
+
+                            };
 
 
-                 };
 
-                  x.FormName = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                     x.FormName = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
                                                           .Elements(epsos + "containerPackagedMedicine")
                                                           .Select(n => n.Element(epsos + "formCode").Attribute("displayName").Value).FirstOrDefault())
                                                              .FirstOrDefault();
@@ -715,7 +791,7 @@ namespace xml
                                                             .Select(n => n.Element(epsos + "formCode").Attribute("code").Value).FirstOrDefault())
                                                                .FirstOrDefault();
 
-                  x.FormCapacity = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                x.FormCapacity = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
                                                                               .Elements(epsos + "containerPackagedMedicine")
                                                                               .Select(n => n.Element(epsos + "capacityQuantity").Attribute("value").Value).FirstOrDefault())
                                                                                  .FirstOrDefault();
@@ -784,24 +860,9 @@ namespace xml
                                         }
                                              ).ToList();
 
-                     x.ExecutionInfo =
-                                        new MedExecutionInfo
-                                        {
+                     x.diagnosis = diagnosi.Select(c => c.Attribute("code").Value).ToList();
 
-                                        ParticipationPerc = medexc.Elements(ns + "act")
-                                                            .Elements(ns + "id")
-                                                            .Where(c => c.Attribute("root").Value == "1.4.18")
-                                                            .Select(c=>c.Attribute("extension").Value).FirstOrDefault()
-                                        
-                                           , RemainingQty = medexc.Elements(ns + "act")
-                                                            .Elements(ns + "id")
-                                                            .Where(c => c.Attribute("root").Value == "1.4.19")
-                                                            .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-
-                                        };
+                   
                                         
                                         
 
@@ -811,7 +872,29 @@ namespace xml
                  });
 
 
+            var dia = document.Descendants(ns + "entry")
+                                .FirstOrDefault()
+                                .Elements(ns +"act")
+                                .Elements(ns + "entryRelationship")
+                                .Elements(ns + "observation")
+                                .Elements(ns + "value")
+                                .Where(c => c.Attribute("codeSystem").Value == "1.3.6.1.4.1.12559.11.10.1.3.1.44.2");
 
+            var digagnosis = dia.Select(c =>
+                                        new Diagnosis
+                                        {
+                                            Code = c.Attribute("code").Value
+                                            ,
+                                            Name = c.Attribute("displayName").Value
+                                        }
+
+                                        );
+
+
+            //.Elements(ns + "observation")
+
+            //.Elements(ns + "value")
+            //.Where(c => c.Attribute("codeSystem").Value == "1.3.6.1.4.1.12559.11.10.1.3.1.44.2");
 
 
 
@@ -827,6 +910,8 @@ namespace xml
                                              .Any(f => f.Value.EndsWith("med_barcode_1"))
                                                          );
 
+            var aoi= asadsad.Elements(ns + "entryRelationship").Elements(ns + "supply").Select(z => z.Element(ns + "quantity").Attribute("value").Value).FirstOrDefault();
+
             var Similardocs = asadsad.Elements(ns + "entryRelationship")
                                    .Where(c => c.Attribute("typeCode").Value == "REFR"
                                             && c.Element(ns +"act").Attribute("classCode").Value == "ACT");
@@ -841,7 +926,7 @@ namespace xml
                                             .Where(c => c.Attribute("root").Value == "1.4.18")
                                             .Select(c => c.Attribute("extension").Value).FirstOrDefault();
 
-
+            var xx = asadsad.Elements(ns + "effectiveTime").Elements(ns+ "period");
 
 
 
@@ -1001,34 +1086,68 @@ namespace xml
             public string Name { get; set; }
         }
 
-        public class Instructions
+        public class instructions
         {
-            public string  low { get; set; }
-            public string high { get; set; }
+            public effectiveTime effectiveTime { get; set; }
 
-            public string Quantity { get; set; }
+            public doseQuantiy doseQuantiy { get; set; }
+
+            public period period { get; set; }
+
+
+
+
         }
+        public class doseQuantiy
+        {
+            public low low { get; set; }
+            public high high { get; set; }
+
+
+        }
+        public abstract class baseInstructions
+        {
+            public string value { get; set; }
+            public string unit { get; set; }
+        }
+
+        public class effectiveTime: baseInstructions { }
+         
+        
+        public class low: baseInstructions { }
+       public class high: baseInstructions { }
+
+        public class period
+        {
+            public low low { get; set; }
+            public high high { get; set; }
+        }
+
+
         public class Medicine
         {
 
             public string NameId { get; set; }
             public string Barcode { get; set; }
+            public string notes { get; set; }
             public string Ingredients { get; set; }
-           
+            public string quantity { get; set; }
+            public instructions instructions { get; set; }
             public string LineId { get; set; }
-            public Instructions Instructions { get; set; }
+            
             public string FormName { get; set; }
             public string FormCode { get; set; }
             public string FormCapacity { get; set; }
             public string Name { get; set; }
             public string EofCode { get; set; }
+             public List<string> diagnosis { get; set; }
             public MedExecutionInfo ExecutionInfo { get; set; }
             public List<SimilarMedicine> SimilarMedicines { get; set; }
         }
 
         public class MedExecutionInfo
         {
-            public string ParticipationPerc { get; set; }
+            public string active_substance { get; set; }
             public string RemainingQty { get; set; }
             public string ParticipationPrice { get; set; }
             public string PatienceDifference { get; set; }
