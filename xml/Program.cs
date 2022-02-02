@@ -727,7 +727,7 @@ namespace xml
 
                  x.quantity = doc.Elements(ns + "entryRelationship").Elements(ns + "supply").Select(z => z.Element(ns + "quantity").Attribute("value").Value).FirstOrDefault();
 
-                     x.instructions =
+                 x.instructions =
                             new instructions
                             {
 
@@ -738,8 +738,8 @@ namespace xml
 
                                 }
                      
-                             ,   doseQuantiy = new doseQuantiy
-                                {
+                              ,doseQuantiy = new doseQuantiy
+                               {
                                  high= new high
                                    {
                                        value= doc.Elements(ns + "doseQuantity").Elements(ns + "high").Select(c => c.Attribute("value").Value).FirstOrDefault()
@@ -756,8 +756,8 @@ namespace xml
                                  }
                              }
                      
-                               , period = new period
-                                {
+                             , period = new period
+                               {
                                    high = new high
                                    {
                                        value = doc.Elements(ns + "rateQuantity").Elements(ns + "high").Select(c => c.Attribute("value").Value).FirstOrDefault()
@@ -780,7 +780,7 @@ namespace xml
 
 
 
-                     x.FormName = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                 x.FormName = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
                                                           .Elements(epsos + "containerPackagedMedicine")
                                                           .Select(n => n.Element(epsos + "formCode").Attribute("displayName").Value).FirstOrDefault())
                                                              .FirstOrDefault();
@@ -791,7 +791,7 @@ namespace xml
                                                             .Select(n => n.Element(epsos + "formCode").Attribute("code").Value).FirstOrDefault())
                                                                .FirstOrDefault();
 
-                x.FormCapacity = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
+                 x.FormCapacity = manufacturedMaterial.Select(i => i.Elements(epsos + "asContent")
                                                                               .Elements(epsos + "containerPackagedMedicine")
                                                                               .Select(n => n.Element(epsos + "capacityQuantity").Attribute("value").Value).FirstOrDefault())
                                                                                  .FirstOrDefault();
@@ -799,10 +799,10 @@ namespace xml
 
 
 
-                  x.Name = manufacturedMaterial.Select(i => i.Element(ns + "name").Value).FirstOrDefault();
+                 x.Name = manufacturedMaterial.Select(i => i.Element(ns + "name").Value).FirstOrDefault();
                                                             
                    
-                  x.EofCode = manufacturedMaterial.Select(i => i.Element(ns + "code").Attribute("code").Value).FirstOrDefault();
+                 x.EofCode = manufacturedMaterial.Select(i => i.Element(ns + "code").Attribute("code").Value).FirstOrDefault();
 
 
                  x.SimilarMedicines = Similardocs.Elements(ns + "act")
@@ -891,55 +891,7 @@ namespace xml
                                         );
 
 
-            //.Elements(ns + "observation")
-
-            //.Elements(ns + "value")
-            //.Where(c => c.Attribute("codeSystem").Value == "1.3.6.1.4.1.12559.11.10.1.3.1.44.2");
-
-
-
-            var asadsad = document.Descendants(ns + "substanceAdministration")
-                                      .Where(z =>
-                                            z.Elements(ns + "consumable")
-                                             .Elements(ns + "manufacturedProduct")
-                                             .Elements(ns + "manufacturedMaterial")
-                                             .Elements(ns + "code")
-                                             .Elements(ns + "originalText")
-                                             .Elements(ns + "reference")
-                                             .Attributes("value")
-                                             .Any(f => f.Value.EndsWith("med_barcode_1"))
-                                                         );
-
-            var aoi= asadsad.Elements(ns + "entryRelationship").Elements(ns + "supply").Select(z => z.Element(ns + "quantity").Attribute("value").Value).FirstOrDefault();
-
-            var Similardocs = asadsad.Elements(ns + "entryRelationship")
-                                   .Where(c => c.Attribute("typeCode").Value == "REFR"
-                                            && c.Element(ns +"act").Attribute("classCode").Value == "ACT");
-
-
-
-            var medexc = asadsad.Elements(ns + "entryRelationship")
-                                   .Where(c => c.Attribute("typeCode").Value == "SPRT")
-
-                                    .Elements(ns + "act")
-                                            .Elements(ns + "id")
-                                            .Where(c => c.Attribute("root").Value == "1.4.18")
-                                            .Select(c => c.Attribute("extension").Value).FirstOrDefault();
-
-            var xx = asadsad.Elements(ns + "effectiveTime").Elements(ns+ "period");
-
-
-
-            //        ,high = doc.Elements(ns + "doseQuantity").Select(c => c.Element(ns + "high").Attribute("value").Value).FirstOrDefault()
-
-
-            //var aswe = asadsad.Elements(ns + "entryRelationship")
-            //                   .Where(k => k.Attributes("typeCode")
-            //                     .Any(z => z.Value == "COMP"));
-
-            //var asf = aswe.Elements(ns +"supply")
-            //                         .Select(c => c.Element(ns +"quantity").Attribute("value").Value)
-            //                         .FirstOrDefault();
+            
 
 
 
