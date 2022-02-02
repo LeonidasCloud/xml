@@ -641,7 +641,7 @@ namespace xml
 
 
                                         }
-                                        );
+                                        ).FirstOrDefault();
 
 
 
@@ -888,10 +888,7 @@ namespace xml
                                             Name = c.Attribute("displayName").Value
                                         }
 
-                                        );
-
-
-            
+                                        ).ToList();
 
 
 
@@ -901,6 +898,24 @@ namespace xml
 
 
 
+            var asdas = new ClinicalDocument
+            {
+                Patient = patient
+                ,
+                Doctor = doctor
+                ,
+                Appointment = appointment
+
+                ,
+                Diagnosis = digagnosis
+                ,
+                Medicines = medicine
+                ,
+                prescription= prescription
+
+            };
+
+            var a = Newtonsoft.Json.JsonConvert.SerializeObject(asdas);
 
 
 
@@ -914,7 +929,7 @@ namespace xml
 
 
 
-            var a = 1;
+            var b = 1;
 
 
 
@@ -1030,6 +1045,7 @@ namespace xml
             public Appointment Appointment { get; set; }
             public List<Diagnosis> Diagnosis { get; set; }
             public List<Medicine> Medicines { get; set; }
+            public Prescription prescription { get; set; }
         }
 
         public class Diagnosis
