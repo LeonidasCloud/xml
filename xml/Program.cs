@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -52,7 +53,7 @@ namespace xml
 
 
                                , Ama = patie.Elements(ns + "id")
-                                            .Where(n => (string)n.Attribute("root") == "1.10.30.2")
+                                            .Where(n => (string)n.Attribute("root") == "1.10.2")
                                             .Select(n => n.Attribute("extension").Value)
                                              .FirstOrDefault()
 
@@ -703,6 +704,11 @@ namespace xml
                      var medexc = doc.Elements(ns + "entryRelationship")
                                    .Where(c => c.Attribute("typeCode").Value == "SPRT");
 
+                     var medexcinfo = medexc.Elements(ns + "act")
+                                            .Where(c => c.Elements(ns + "templateId").Select(c=> c.Attribute("root").Value).FirstOrDefault() == "2.16.840.1.113883.10.12.301")
+                                            .Elements(ns+"id");
+                     var medexecutions = medexc.Elements(ns + "act")
+                                            .Where(c => c.Element(ns + "templateId") == null);
 
 
 
@@ -805,6 +811,78 @@ namespace xml
                  x.EofCode = manufacturedMaterial.Select(i => i.Element(ns + "code").Attribute("code").Value).FirstOrDefault();
 
 
+                     x.MedExecutionInfo = new MedExecutionInfo
+                     {
+                         genetic = medexcinfo.Where(c=> c.Attribute("root").Value== "1.4.15").Select(c=>c.Attribute("extension").Value).FirstOrDefault()
+
+                        ,active_substance = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.25").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,form_code = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.26").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                         ,content = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.27").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,commercial_name = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.28").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,dose_unit = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.29").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,pharm_dose_unit = medexcinfo.Where(c=> c.Attribute("root").Value== "1.4.30").Select(c=>c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,pharm_content = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.31").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,package = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.32").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,unit_price = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.33").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                        , participation_percentage = medexcinfo.Where(c=> c.Attribute("root").Value== "1.4.18").Select(c=>c.Attribute("extension").Value).FirstOrDefault()
+
+
+                         ,remaining_quantity = medexcinfo.Where(c=> c.Attribute("root").Value== "1.4.19").Select(c=>c.Attribute("extension").Value).FirstOrDefault()
+
+
+                         ,participation_price = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.20").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                        , patient_difference = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.21").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                         ,total_difference = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.21.1").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                        , similar_list_id = medexcinfo.Where(c => c.Attribute("root").Value == "1.4.22").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                         ,retail_price = medexcinfo.Where(c => c.Attribute("root").Value == "1.8.5.1").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,reference_price = medexcinfo.Where(c => c.Attribute("root").Value == "1.8.5.2").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                         ,wholesale_price = medexcinfo.Where(c => c.Attribute("root").Value == "1.8.5.3").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,hospital = medexcinfo.Where(c => c.Attribute("root").Value == "1.8.5.5").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                         ,prgn = medexcinfo.Where(c => c.Attribute("root").Value == "1.9.6.1").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                         ,
+                         cluster_with_genetic = medexcinfo.Where(c => c.Attribute("root").Value == "1.9.6.2").Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                     };
+
+
+
+
                  x.SimilarMedicines = Similardocs.Elements(ns + "act")
                                        .Select(c =>
                                         new SimilarMedicine
@@ -862,9 +940,51 @@ namespace xml
 
                      x.diagnosis = diagnosi.Select(c => c.Attribute("code").Value).ToList();
 
-                   
-                                        
-                                        
+                     x.MedExecutions = medexecutions.Select(c =>
+
+                         new MedExecutions
+                         {
+                             execution_number = c.Elements(ns + "id")
+                                                  .Where(c => c.Attribute("root").Value == "2.10.8")
+                                                  .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         ,  execution_price = c.Elements(ns + "id")
+                                                  .Where(c => c.Attribute("root").Value == "2.10.9")
+                                                  .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                         ,   retail_price = c.Elements(ns + "id")
+                                                  .Where(c => c.Attribute("root").Value == "2.10.11")
+                                                  .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                          , reference_price = c.Elements(ns + "id")
+                                                  .Where(c => c.Attribute("root").Value == "2.10.10")
+                                                  .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                         
+                         ,  lot_numbers = c.Elements(ns + "id")
+                                                  .Where(c => c.Attribute("root").Value == "2.10.12")
+                                                  .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+                           
+                           ,  insurance_difference = c.Elements(ns + "id")
+                                                  .Where(c => c.Attribute("root").Value == "1.4.21.2")
+                                                  .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                          
+                          
+                          ,   execution_date = c.Elements(ns + "effectiveTime")
+                                                  
+                                                  .Select(c => c.Attribute("value").Value).FirstOrDefault()
+
+                         }
+
+                        ).ToList();
+
+
+
+
+
 
 
 
@@ -874,11 +994,11 @@ namespace xml
 
             var dia = document.Descendants(ns + "entry")
                                 .FirstOrDefault()
-                                .Elements(ns +"act")
+                                .Elements(ns + "act")
                                 .Elements(ns + "entryRelationship")
                                 .Elements(ns + "observation")
                                 .Elements(ns + "value")
-                                .Where(c => c.Attribute("codeSystem").Value == "1.3.6.1.4.1.12559.11.10.1.3.1.44.2");
+                                .Where(c => c.Attribute("codeSystem") !=null  && c.Attribute("codeSystem").Value == "1.3.6.1.4.1.12559.11.10.1.3.1.44.2");
 
             var digagnosis = dia.Select(c =>
                                         new Diagnosis
@@ -895,10 +1015,50 @@ namespace xml
 
 
 
+            var duplicateexc = from med in medicine
+                         
+                         from exc in med.MedExecutions
+                         //group exc by exc.execution_number  into g
+                         select new {
+                             number = exc.execution_number
+                            ,date = exc.execution_date
+                            ,medicins = new dispensed_medicines
+                            {
+                                barcode=med.Barcode
+                               ,quanity= med.MedExecutions.Count().ToString()
+                               , lots=exc.lot_numbers
+                               
+                               , retail_price=exc.retail_price
+                               
+                               ,refernce_price=exc.reference_price
+
+                               ,participation_price= med.MedExecutionInfo.participation_price
+                                
+                               , insurance_difference= med.MedExecutionInfo.patient_difference
+                            }
 
 
+                         };
 
-            var asdas = new ClinicalDocument
+            var executions = (from med in duplicateexc
+
+                           group med by new { med.number, med.date }
+                        into g
+                         select new Executions
+                         {
+                             date = g.Key.date
+                            ,
+                             number = g.Key.number
+
+                             ,
+                             medicines = g.Select(c=>c.medicins).GroupBy(x => x.barcode).Select(x => x.FirstOrDefault()).ToList()
+                         }).OrderBy(c=>c.number).ToList();
+
+
+            
+
+
+          var asdas = new ClinicalDocument
             {
                 Patient = patient
                 ,
@@ -912,8 +1072,10 @@ namespace xml
                 Medicines = medicine
                 ,
                 prescription= prescription
+              ,
+              Executions= executions
 
-            };
+          };
 
             var a = Newtonsoft.Json.JsonConvert.SerializeObject(asdas);
 
@@ -1046,6 +1208,7 @@ namespace xml
             public List<Diagnosis> Diagnosis { get; set; }
             public List<Medicine> Medicines { get; set; }
             public Prescription prescription { get; set; }
+            public List<Executions> Executions { get; set; }
         }
 
         public class Diagnosis
@@ -1091,7 +1254,29 @@ namespace xml
             public high high { get; set; }
         }
 
+        public class Executions
+        {
+            public string number  { get; set; }
 
+            public string date { get; set; }
+
+            public List<dispensed_medicines> medicines { get; set; }
+
+        }
+
+        public class dispensed_medicines
+        {
+            public string barcode { get; set; }
+            public string quanity { get; set; }
+            public string lots { get; set; }
+            public string retail_price { get; set; }
+            public string refernce_price { get; set; }
+
+            public string participation_price { get; set; }
+
+            public string insurance_difference { get; set; }
+
+        }
         public class Medicine
         {
 
@@ -1109,27 +1294,57 @@ namespace xml
             public string Name { get; set; }
             public string EofCode { get; set; }
              public List<string> diagnosis { get; set; }
-            public MedExecutionInfo ExecutionInfo { get; set; }
+           
+            [JsonIgnore]
+            public List<MedExecutions> MedExecutions { get; set; }
+           public MedExecutionInfo MedExecutionInfo { get; set; }
             public List<SimilarMedicine> SimilarMedicines { get; set; }
         }
 
         public class MedExecutionInfo
         {
+            public string genetic { get; set; }
             public string active_substance { get; set; }
-            public string RemainingQty { get; set; }
-            public string ParticipationPrice { get; set; }
-            public string PatienceDifference { get; set; }
-            public string TotalDifference { get; set; }
-            public string SimilarListId { get; set; }
-            public string Genetic { get; set; }
-            public string RetailPrice { get; set; }
-            public string ReferencePrice { get; set; }
-            public string WholesalePrice { get; set; }
-            public string Hospital { get; set; }
-            public string PrGn { get; set; }
-            public string InCluster { get; set; }
-        }
+            public string form_code { get; set; }
+            public string content { get; set; }
+            public string commercial_name { get; set; }
+            public string dose_unit { get; set; }
+            public string pharm_dose_unit { get; set; }
+            public string pharm_content { get; set; }
+            public string package { get; set; }
+            public string unit_price { get; set; }
+            public string participation_percentage { get; set; }
+            public string remaining_quantity { get; set; }
+            public string participation_price { get; set; }
+            
+            public string patient_difference { get; set; }
+            public string total_difference { get; set; }
+            public string similar_list_id { get; set; }
 
+            public string retail_price { get; set; }
+            public string reference_price { get; set; } 
+            public string wholesale_price { get; set; }
+            public string hospital { get; set; }
+            public string prgn { get; set; }
+            public string cluster_with_genetic { get; set; }
+
+
+        }
+       
+        public class MedExecutions
+        {
+            public string  execution_number { get; set; }
+        
+            public string execution_price { get; set; }
+            
+            public string retail_price { get; set; }
+            public string reference_price { get; set; }
+            public string lot_numbers { get; set; }
+
+            public string insurance_difference { get; set; }
+            public string execution_date { get; set; }
+
+        }
         public class SimilarMedicine
         {
             public string Barcode { get; set; }

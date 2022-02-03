@@ -5,12 +5,12 @@
 	<templateId root="2.16.840.1.113883.10.20.22.1.1"/>
 	<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.1.1"/>
 	<templateId root="1.3.6.1.4.1.19376.1.5.3.1.1.1"/>
-	<id extension="2112155093221" root="1.21"/>
+	<id extension="2202030054923" root="1.21"/>
 	<code code="57833-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="ePrescription"/>
 	<title>Greek ePrescription</title>
 	<effectiveTime xsi:type="IVL_TS">
-		<low value="20211215"/>
-		<high value="20220218"/>
+		<low value="20220203"/>
+		<high value="20220224"/>
 	</effectiveTime>
 	<confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
 	<languageCode code="el"/>
@@ -49,7 +49,7 @@
 	</recordTarget>
 	<author>
 		<functionCode code="221" codeSystem="2.16.840.1.113883.2.9.6.2.7" codeSystemName="ISCO" displayName="Medical Doctors"/>
-		<time value="20211215"/>
+		<time value="20220203"/>
 		<assignedAuthor>
 			<id root="2.16.840.1.113883.4.6"/>
 			<id extension="16873" root="1.18"/>
@@ -95,7 +95,7 @@
 		</assignedCustodian>
 	</custodian>
 	<legalAuthenticator>
-		<time value="20220128"/>
+		<time value="20220203"/>
 		<signatureCode code="S"/>
 		<assignedEntity>
 			<id extension="16873" root="1.18"/>
@@ -139,25 +139,25 @@
 			<component>
 				<section>
 					<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.2.1"/>
-					<id extension="2112155093221" root="1.21"/>
+					<id extension="2202030054923" root="1.21"/>
 					<code code="57828-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Prescriptions"/>
 					<title>Συνταγή</title>
 					<text>
 						<list>
-							<item ID="med_barcode_1">2800362805019</item>
-							<item ID="med_notes_1">sxolio farmako 1</item>
-							<item ID="med_barcode_2">2801975902010</item>
-							<item ID="med_barcode_3">2802621602056</item>
+							<item ID="med_barcode_1">2801975902010</item>
+							<item ID="med_notes_1">1 μετα το φαι</item>
+							<item ID="med_barcode_2">2802525301116</item>
+							<item ID="med_notes_2">Σχόλια φάρμακο 2</item>
+							<item ID="med_barcode_3">2802009201024</item>
+							<item ID="med_notes_3">Σχόλια φάρμακο 1</item>
+							<item ID="prescription_notes">sxolio synatghssxol</item>
 						</list>
 					</text>
 					<entry>
 						<act classCode="INFRM" moodCode="EVN">
-							<id extension="10972057" root="1.22"/>
+							<id extension="10973930" root="1.22"/>
 							<id extension="1" root="1.1.3"/>
-							<id extension="6" root="1.1.4"/>
-							<id extension="3" root="1.1.4.1"/>
-							<id extension="2112155079221" root="1.1.4.2"/>
-							<id extension="20220207" root="1.1.4.3"/>
+							<id extension="1" root="1.1.4"/>
 							<id extension="0" root="1.1.3.1"/>
 							<id extension="0" root="1.1.23"/>
 							<id extension="0" root="1.4.11"/>
@@ -173,38 +173,63 @@
 							<id extension="0" root="1.1.15"/>
 							<id extension="0" root="1.1.16"/>
 							<id extension="0" root="1.1.17"/>
-							<id extension="0" root="1.1.19"/>
-							<id extension="0.0" root="1.1.2.1"/>
-							<id extension="0.0" root="1.1.2.2"/>
-							<id extension="0.0" root="1.1.2.3"/>
-							<id extension="0.0" root="1.1.2.4"/>
-							<id extension="0.0" root="1.1.2.4.1"/>
+							<id extension="0" root="1.1.18"/>
+							<id extension="2" root="1.1.19"/>
+							<id extension="0.85" root="1.1.2.2"/>
+							<id extension="1.625" root="1.1.2.3"/>
+							<id extension="2.475" root="1.1.2.4"/>
+							<id extension="15.0" root="1.1.2.4.1"/>
 							<id extension="0.0" root="1.2.1.4"/>
-							<id extension="0.0" root="1.1.2.5"/>
-							<id extension="0.0" root="1.1.2.6"/>
-							<id extension="0.0" root="1.1.2.7"/>
-							<id extension="0.0" root="1.1.2.8"/>
+							<id extension="3.45" root="1.2.1.5"/>
+							<id extension="3.45" root="1.2.1.6"/>
+							<id extension="12.525" root="1.1.2.5"/>
+							<id extension="8.5" root="1.1.2.7"/>
+							<id extension="6.5" root="1.1.2.8"/>
 							<id extension="0" root="1.1.21"/>
 							<id extension="1" root="1.1.22.2"/>
-							<id extension="0" root="1.1.22.1"/>
+							<id extension="1.0" root="1.1.22"/>
+							<id extension="1" root="1.1.22.1"/>
 							<id extension="0" root="1.10.4"/>
-							<id extension="1" root="1.10.9"/>
+							<id extension="0" root="1.10.9"/>
 							<id extension="0" root="1.4.9"/>
 							<id extension="0" root="1.4.10"/>
 							<id extension="0" root="1.1.24"/>
 							<id extension="0" root="1.8.1"/>
 							<id extension="0" root="1.7.1"/>
 							<id extension="0" root="1.1.26"/>
+							<id extension="0.0" root="1.1.27.1"/>
+							<id extension="0.0" root="1.1.27.2"/>
 							<id extension="0" root="1.1.28.1"/>
 							<id extension="0" root="1.1.29"/>
 							<id extension="63009" root="1.80"/>
 							<id extension="0" root="1.5.10"/>
 							<code nullFlavor="NA"/>
-							<statusCode code="new"/>
+							<statusCode code="active"/>
 							<effectiveTime>
-								<low value="20211215"/>
-								<high value="20220218"/>
+								<low value="20220203"/>
+								<high value="20220224"/>
 							</effectiveTime>
+							<entryRelationship typeCode="SUBJ" inversionInd="true">
+								<act classCode="ACT" moodCode="INT">
+									<templateId root="2.16.840.1.113883.10.20.1.43"/>
+									<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.3.1"/>
+									<code code="FINSTRUCT" codeSystem="1.3.6.1.4.1.19376.1.5.3.2" codeSystemName="IHEActCode"/>
+									<text>
+										<reference value="#prescription_notes"/>
+									</text>
+									<statusCode code="completed"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="RSON">
+								<observation classCode="OBS" moodCode="EVN">
+									<templateId root="2.16.840.1.113883.10.20.1.28"/>
+									<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5"/>
+									<code code="282291009" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.42.23" codeSystemName="SNOMED-CT" displayName="Diagnosis interpretation"/>
+									<text>sxolio diagnwsis</text>
+									<statusCode code="completed"/>
+									<value xsi:type="CD"/>
+								</observation>
+							</entryRelationship>
 							<entryRelationship typeCode="RSON">
 								<observation classCode="OBS" moodCode="EVN">
 									<templateId root="2.16.840.1.113883.10.20.1.28"/>
@@ -215,16 +240,6 @@
 									<value xsi:type="CD" code="K25" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.2" codeSystemName="ICD10" displayName="Γαστρικό έλκος"/>
 								</observation>
 							</entryRelationship>
-							<entryRelationship typeCode="RSON">
-								<observation classCode="OBS" moodCode="EVN">
-									<templateId root="2.16.840.1.113883.10.20.1.28"/>
-									<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5"/>
-									<code code="282291009" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.42.23" codeSystemName="SNOMED-CT" displayName="Diagnosis interpretation"/>
-									<text>Ιδιοπαθής (πρωτοπαθής) υπέρταση</text>
-									<statusCode code="completed"/>
-									<value xsi:type="CD" code="I10" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.2" codeSystemName="ICD10" displayName="Ιδιοπαθής (πρωτοπαθής) υπέρταση"/>
-								</observation>
-							</entryRelationship>
 						</act>
 					</entry>
 					<entry>
@@ -232,156 +247,18 @@
 						<substanceAdministration classCode="SBADM" moodCode="INT">
 							<templateId root="2.16.840.1.113883.10.20.1.24"/>
 							<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.2"/>
-							<id extension="22008138" root="1.21.1"/>
+							<id extension="22013149" root="1.21.1"/>
 							<statusCode code="active"/>
 							<effectiveTime xsi:type="IVL_TS">
 								<low nullFlavor="UNK"/>
 								<high nullFlavor="UNK"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" operator="A">
-								<period value="12" unit="h"/>
+								<period value="6" unit="h"/>
 							</effectiveTime>
 							<doseQuantity>
-								<low value="3" unit="ΕΝΕΣΗ_ΔΙΑΛ_ΦΥΣΙΓΓΕΣ"/>
-								<high value="3" unit="ΕΝΕΣΗ_ΔΙΑΛ_ΦΥΣΙΓΓΕΣ"/>
-							</doseQuantity>
-							<rateQuantity>
-								<low value="19" unit="d"/>
-								<high value="19" unit="d"/>
-							</rateQuantity>
-							<consumable>
-								<manufacturedProduct classCode="MANU">
-									<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.1"/>
-									<templateId root="2.16.840.1.113883.10.20.1.53"/>
-									<manufacturedMaterial>
-										<code code="036280501" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="LASIX INJ.SOL 20MG/2ML AMP BTx5 AMPx2 ML">
-											<originalText>
-												<reference value="#med_barcode_1"/>
-											</originalText>
-										</code>
-										<name>LASIX INJ.SOL 20MG/2ML AMP BTx5 AMPx2 ML</name>
-										<epsos:desc>20MG/2ML AMP</epsos:desc>
-										<epsos:formCode code="INJ.SOL" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="INJ.SOL">
-											<epsos:translation displayName="ΕΝΕΣΗ_ΔΙΑΛ_ΦΥΣΙΓΓΕΣ"/>
-										</epsos:formCode>
-										<epsos:asContent classCode="CONT">
-											<epsos:containerPackagedMedicine classCode="CONT" determinerCode="KIND">
-												<epsos:name>LASIX INJ.SOL 20MG/2ML AMP BTx5 AMPx2 ML</epsos:name>
-												<epsos:formCode code="BTx5_AMPx2_ML" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="BTx5_AMPx2_ML"/>
-												<epsos:capacityQuantity value="5"/>
-												<epsos:capTypeCode nullFlavor="NA"/>
-											</epsos:containerPackagedMedicine>
-										</epsos:asContent>
-										<epsos:ingredient classCode="ACTI">
-											<epsos:quantity>
-												<epsos:numerator value="0" unit="0" xsi:type="epsos:PQ"/>
-												<epsos:denominator value="0" unit="0" xsi:type="epsos:PQ"/>
-											</epsos:quantity>
-											<epsos:ingredient classCode="MMAT" determinerCode="KIND">
-												<epsos:code code="C03CA01" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="FUROSEMIDE"/>
-												<epsos:name>FUROSEMIDE</epsos:name>
-											</epsos:ingredient>
-										</epsos:ingredient>
-									</manufacturedMaterial>
-								</manufacturedProduct>
-							</consumable>
-							<entryRelationship typeCode="COMP">
-								<supply classCode="SPLY" moodCode="RQO">
-									<independentInd value="false"/>
-									<quantity value="2" unit="1"/>
-								</supply>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802288401016" root="1.7.5.1"/>
-									<id extension="HYDROFLUX INJ.SOL 20MG/2ML AMP BTX5AMPSX2ML" root="1.7.5.2"/>
-									<id extension="1.82" root="1.8.5.1"/>
-									<id extension="1.65" root="1.8.6.1"/>
-									<id extension="1.79" root="1.8.7.1"/>
-									<id extension="1.82" root="1.8.5.2"/>
-									<id extension="1.65" root="1.8.6.2"/>
-									<id extension="1.79" root="1.8.7.2"/>
-									<id extension="1.32" root="1.8.5.3"/>
-									<id extension="1.17" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="1.15" root="1.8.5.6"/>
-									<id extension="1" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2800362805019" root="1.7.5.1"/>
-									<id extension="LASIX INJ.SOL 20MG/2ML AMP BTx5 AMPx2 ML" root="1.7.5.2"/>
-									<id extension="1.96" root="1.8.5.1"/>
-									<id extension="2.06" root="1.8.6.1"/>
-									<id extension="1.92" root="1.8.7.1"/>
-									<id extension="1.82" root="1.8.5.2"/>
-									<id extension="2.06" root="1.8.6.2"/>
-									<id extension="1.79" root="1.8.7.2"/>
-									<id extension="1.42" root="1.8.5.3"/>
-									<id extension="1.25" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="1.23" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="O" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="SPRT">
-								<act classCode="ACT" moodCode="EVN">
-									<templateId root="2.16.840.1.113883.10.12.301"/>
-									<id extension="1" root="1.4.15"/>
-									<id extension="25.0" root="1.4.18"/>
-									<id extension="2" root="1.4.19"/>
-									<id extension="5020" root="1.4.22"/>
-									<id extension="0" root="1.4.24"/>
-									<id extension="Λοιπές ενδείξεις 1" root="1.4.24.1"/>
-									<id extension="25" root="1.4.24.2"/>
-									<id extension="1" root="1.4.23"/>
-									<id extension="1" root="1.9.6.2"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="INFRM" moodCode="EVN">
-									<code nullFlavor="NA"/>
-									<entryRelationship typeCode="RSON">
-										<observation classCode="OBS" moodCode="EVN">
-											<templateId root="2.16.840.1.113883.10.20.1.28"/>
-											<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5"/>
-											<code code="282291009" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.42.23" codeSystemName="SNOMED-CT" displayName="Diagnosis interpretation"/>
-											<text>Γαστρικό έλκος</text>
-											<statusCode code="completed"/>
-											<value xsi:type="CD" code="K25" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.2" codeSystemName="ICD10" displayName="Γαστρικό έλκος"/>
-										</observation>
-									</entryRelationship>
-								</act>
-							</entryRelationship>
-						</substanceAdministration>
-					</entry>
-					<entry>
-						<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.2"/>
-						<substanceAdministration classCode="SBADM" moodCode="INT">
-							<templateId root="2.16.840.1.113883.10.20.1.24"/>
-							<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.2"/>
-							<id extension="22008139" root="1.21.1"/>
-							<statusCode code="active"/>
-							<effectiveTime xsi:type="IVL_TS">
-								<low nullFlavor="UNK"/>
-								<high nullFlavor="UNK"/>
-							</effectiveTime>
-							<effectiveTime xsi:type="PIVL_TS" operator="A">
-								<period value="8" unit="h"/>
-							</effectiveTime>
-							<doseQuantity>
-								<low value="3" unit="ΚΑΨΟΥΛΕΣ_ΕΝΤΕΡΟΔΙΑΛ"/>
-								<high value="3" unit="ΚΑΨΟΥΛΕΣ_ΕΝΤΕΡΟΔΙΑΛ"/>
+								<low value="8.5" unit="ΚΑΨΟΥΛΕΣ_ΕΝΤΕΡΟΔΙΑΛ"/>
+								<high value="8.5" unit="ΚΑΨΟΥΛΕΣ_ΕΝΤΕΡΟΔΙΑΛ"/>
 							</doseQuantity>
 							<rateQuantity>
 								<low value="19" unit="d"/>
@@ -394,7 +271,7 @@
 									<manufacturedMaterial>
 										<code code="197590201" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="LOSEC GR.CAP 20mg/CAP BTX14(σε φιαλίδιο)">
 											<originalText>
-												<reference value="#med_barcode_2"/>
+												<reference value="#med_barcode_1"/>
 											</originalText>
 										</code>
 										<name>LOSEC GR.CAP 20mg/CAP BTX14(σε φιαλίδιο)</name>
@@ -426,355 +303,53 @@
 							<entryRelationship typeCode="COMP">
 								<supply classCode="SPLY" moodCode="RQO">
 									<independentInd value="false"/>
-									<quantity value="1" unit="1"/>
+									<quantity value="2" unit="1"/>
 								</supply>
 							</entryRelationship>
-							<entryRelationship typeCode="REFR">
+							<entryRelationship typeCode="SUBJ" inversionInd="true">
 								<act classCode="ACT" moodCode="INT">
-									<id extension="2802757101034" root="1.7.5.1"/>
-									<id extension="COMOPRAZOL GR.CAP 20MG/CAP BT x 14" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802083201033" root="1.7.5.1"/>
-									<id extension="ELKOSTOP GR.CAP 20MG/CAP ΒΤx14 (FOIL 2x7)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2801990301041" root="1.7.5.1"/>
-									<id extension="ELKOTHERAN E.C.CAPS 20MG/CAP BTX14(FOIST1X14)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.77" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802058701025" root="1.7.5.1"/>
-									<id extension="ESELAN GR.CAP 20MG/CAP FLx14 +1 φακ, αφυγρ," root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802647501012" root="1.7.5.1"/>
-									<id extension="ESOPRAZ GR.CAP 20MG/CAP ΒΤ x 14 (ΒL,2 x 7)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802021101012" root="1.7.5.1"/>
-									<id extension="GLAVERAL E.C.CAPS 20MG/CAP ΒΤ x 14" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802068901033" root="1.7.5.1"/>
-									<id extension="LANEX GR.CAP 20MG/CAP BT X 14" root="1.7.5.2"/>
-									<id extension="4.12" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="4.04" root="1.8.7.1"/>
-									<id extension="4.12" root="1.8.5.2"/>
-									<id extension="7.77" root="1.8.6.2"/>
-									<id extension="4.04" root="1.8.7.2"/>
-									<id extension="2.99" root="1.8.5.3"/>
-									<id extension="2.65" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.6" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802743101017" root="1.7.5.1"/>
-									<id extension="LODREC GR.CAP 20MG/CAP BTx1 VIALx14 CAPS" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802108501032" root="1.7.5.1"/>
-									<id extension="LOPROC GR.CAP 20MG/CAP ΒΤx14(BLISTERS 2x7)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2801975902010" root="1.7.5.1"/>
-									<id extension="LOSEC GR.CAP 20mg/CAP BTX14(σε φιαλίδιο)" root="1.7.5.2"/>
-									<id extension="4.82" root="1.8.5.1"/>
-									<id extension="10.86" root="1.8.6.1"/>
-									<id extension="4.73" root="1.8.7.1"/>
-									<id extension="3.7" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.63" root="1.8.7.2"/>
-									<id extension="3.5" root="1.8.5.3"/>
-									<id extension="3.11" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="3.05" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="O" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802074501012" root="1.7.5.1"/>
-									<id extension="LOZAPRIN E.C.CAPS 20MG/CAP FLX14(ΠΛΑΣΤ,ΦΙΑΛ,)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802743501015" root="1.7.5.1"/>
-									<id extension="LYOPRAZ  GR.CAP 20MG/CAP ΒΤ x 14" root="1.7.5.2"/>
-									<id extension="3.82" root="1.8.5.1"/>
-									<id extension="8.69" root="1.8.6.1"/>
-									<id extension="3.75" root="1.8.7.1"/>
-									<id extension="3.82" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.75" root="1.8.7.2"/>
-									<id extension="2.77" root="1.8.5.3"/>
-									<id extension="2.46" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.41" root="1.8.5.6"/>
-									<id extension="1" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802491502012" root="1.7.5.1"/>
-									<id extension="MEPROLEN GR.CAP 20MG/CAP BT x 14 (BLIST 2 x7)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802228701015" root="1.7.5.1"/>
-									<id extension="ODASOL/GENEPHARM GR.CAP 20MG/CAP BTx14" root="1.7.5.2"/>
-									<id extension="4.19" root="1.8.5.1"/>
-									<id extension="8.69" root="1.8.6.1"/>
-									<id extension="4.11" root="1.8.7.1"/>
-									<id extension="4.19" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="4.11" root="1.8.7.2"/>
-									<id extension="3.04" root="1.8.5.3"/>
-									<id extension="2.7" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.65" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802589502016" root="1.7.5.1"/>
-									<id extension="VAMAC GR.CAP 20MG/CAP BTx14 (σε φιαλίδιο)" root="1.7.5.2"/>
-									<id extension="4.03" root="1.8.5.1"/>
-									<id extension="9.18" root="1.8.6.1"/>
-									<id extension="3.95" root="1.8.7.1"/>
-									<id extension="4.03" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="3.95" root="1.8.7.2"/>
-									<id extension="2.92" root="1.8.5.3"/>
-									<id extension="2.59" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.54" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
-								</act>
-							</entryRelationship>
-							<entryRelationship typeCode="REFR">
-								<act classCode="ACT" moodCode="INT">
-									<id extension="2802070601013" root="1.7.5.1"/>
-									<id extension="VERALOX E.C.CAPS 20MG/CAP BTX14(BLISTERS)" root="1.7.5.2"/>
-									<id extension="4.19" root="1.8.5.1"/>
-									<id extension="8.69" root="1.8.6.1"/>
-									<id extension="4.11" root="1.8.7.1"/>
-									<id extension="4.19" root="1.8.5.2"/>
-									<id extension="7.76" root="1.8.6.2"/>
-									<id extension="4.11" root="1.8.7.2"/>
-									<id extension="3.04" root="1.8.5.3"/>
-									<id extension="2.7" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="2.65" root="1.8.5.6"/>
-									<id extension="0" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
+									<templateId root="2.16.840.1.113883.10.20.1.43"/>
+									<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.3.1"/>
+									<code code="FINSTRUCT" codeSystem="1.3.6.1.4.1.19376.1.5.3.2" codeSystemName="IHEActCode"/>
+									<text>
+										<reference value="#med_notes_1"/>
+									</text>
+									<statusCode code="completed"/>
 								</act>
 							</entryRelationship>
 							<entryRelationship typeCode="SPRT">
 								<act classCode="ACT" moodCode="EVN">
 									<templateId root="2.16.840.1.113883.10.12.301"/>
 									<id extension="1" root="1.4.15"/>
-									<id extension="10.0" root="1.4.18"/>
+									<id extension="3.7" root="1.4.17"/>
+									<id extension="25.0" root="1.4.18"/>
 									<id extension="1" root="1.4.19"/>
+									<id extension="0.925" root="1.4.20"/>
+									<id extension="1.12" root="1.4.21"/>
+									<id extension="1.12" root="1.4.21.1"/>
+									<id extension="0.0" root="1.4.21.3"/>
 									<id extension="13" root="1.4.22"/>
-									<id extension="1" root="1.4.23"/>
+									<id extension="4.82" root="1.8.5.1"/>
+									<id extension="4.73" root="1.8.7.1"/>
+									<id extension="3.7" root="1.8.5.2"/>
+									<id extension="3.63" root="1.8.7.2"/>
+									<id extension="0" root="1.4.23"/>
 									<id extension="1" root="1.9.6.2"/>
 									<code nullFlavor="NA"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="SPRT">
+								<act classCode="ACT" moodCode="EVN">
+									<id extension="0" root="2.10.5"/>
+									<id extension="1" root="2.10.6"/>
+									<id extension="2" root="2.10.8"/>
+									<id extension="3.7" root="2.10.9"/>
+									<id extension="4.82" root="2.10.11"/>
+									<id extension="3.7" root="2.10.10"/>
+									<id extension="180308271212" root="2.10.12"/>
+									<id extension="0.0" root="1.4.21.2"/>
+									<code nullFlavor="NA"/>
+									<effectiveTime value="20220203110416"/>
 								</act>
 							</entryRelationship>
 							<entryRelationship typeCode="REFR">
@@ -799,8 +374,8 @@
 						<substanceAdministration classCode="SBADM" moodCode="INT">
 							<templateId root="2.16.840.1.113883.10.20.1.24"/>
 							<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.2"/>
-							<id extension="22008140" root="1.21.1"/>
-							<statusCode code="active"/>
+							<id extension="22013150" root="1.21.1"/>
+							<statusCode code="completed"/>
 							<effectiveTime xsi:type="IVL_TS">
 								<low nullFlavor="UNK"/>
 								<high nullFlavor="UNK"/>
@@ -809,8 +384,8 @@
 								<period value="8" unit="h"/>
 							</effectiveTime>
 							<doseQuantity>
-								<low value="3" unit="ΔΙΣΚΙΑ_"/>
-								<high value="3" unit="ΔΙΣΚΙΑ_"/>
+								<low value="9" unit="ΔΙΣΚΙΑ_ΕΠΙΚΑΛ"/>
+								<high value="9" unit="ΔΙΣΚΙΑ_ΕΠΙΚΑΛ"/>
 							</doseQuantity>
 							<rateQuantity>
 								<low value="21" unit="d"/>
@@ -821,20 +396,20 @@
 									<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.1"/>
 									<templateId root="2.16.840.1.113883.10.20.1.53"/>
 									<manufacturedMaterial>
-										<code code="262160205" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="AMLOTENS TAB 10MG/TAB BTx30 (BLISTER 3x10)">
+										<code code="252530111" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="XOZAL F.C.TAB 5MG/TAB BTx30 (ΣΕ BLISTER)">
 											<originalText>
-												<reference value="#med_barcode_3"/>
+												<reference value="#med_barcode_2"/>
 											</originalText>
 										</code>
-										<name>AMLOTENS TAB 10MG/TAB BTx30 (BLISTER 3x10)</name>
-										<epsos:desc>10MG/TAB</epsos:desc>
-										<epsos:formCode code="TAB" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="TAB">
-											<epsos:translation displayName="ΔΙΣΚΙΑ_"/>
+										<name>XOZAL F.C.TAB 5MG/TAB BTx30 (ΣΕ BLISTER)</name>
+										<epsos:desc>5MG/TAB</epsos:desc>
+										<epsos:formCode code="F.C.TAB" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="F.C.TAB">
+											<epsos:translation displayName="ΔΙΣΚΙΑ_ΕΠΙΚΑΛ"/>
 										</epsos:formCode>
 										<epsos:asContent classCode="CONT">
 											<epsos:containerPackagedMedicine classCode="CONT" determinerCode="KIND">
-												<epsos:name>AMLOTENS TAB 10MG/TAB BTx30 (BLISTER 3x10)</epsos:name>
-												<epsos:formCode code="BTx30_(BLISTER_3x10)" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="BTx30_(BLISTER_3x10)"/>
+												<epsos:name>XOZAL F.C.TAB 5MG/TAB BTx30 (ΣΕ BLISTER)</epsos:name>
+												<epsos:formCode code="BTx30_(ΣΕ_BLISTER)" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="BTx30_(ΣΕ_BLISTER)"/>
 												<epsos:capacityQuantity value="30"/>
 												<epsos:capTypeCode nullFlavor="NA"/>
 											</epsos:containerPackagedMedicine>
@@ -845,18 +420,8 @@
 												<epsos:denominator value="0" unit="0" xsi:type="epsos:PQ"/>
 											</epsos:quantity>
 											<epsos:ingredient classCode="MMAT" determinerCode="KIND">
-												<epsos:code code="C08CA01" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="AMLODIPINE MESILATE MONOHYDRATE"/>
-												<epsos:name>AMLODIPINE MESILATE MONOHYDRATE</epsos:name>
-											</epsos:ingredient>
-										</epsos:ingredient>
-										<epsos:ingredient classCode="ACTI">
-											<epsos:quantity>
-												<epsos:numerator value="0" unit="0" xsi:type="epsos:PQ"/>
-												<epsos:denominator value="0" unit="0" xsi:type="epsos:PQ"/>
-											</epsos:quantity>
-											<epsos:ingredient classCode="MMAT" determinerCode="KIND">
-												<epsos:code code="C08CA01" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="AMLODIPINE BESYLATE"/>
-												<epsos:name>AMLODIPINE BESYLATE</epsos:name>
+												<epsos:code code="R06AE09" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="LEVOCETIRIZINE DIHYDROCHLORIDE"/>
+												<epsos:name>LEVOCETIRIZINE DIHYDROCHLORIDE</epsos:name>
 											</epsos:ingredient>
 										</epsos:ingredient>
 									</manufacturedMaterial>
@@ -865,40 +430,190 @@
 							<entryRelationship typeCode="COMP">
 								<supply classCode="SPLY" moodCode="RQO">
 									<independentInd value="false"/>
-									<quantity value="1" unit="1"/>
+									<quantity value="2" unit="1"/>
 								</supply>
 							</entryRelationship>
-							<entryRelationship typeCode="REFR">
+							<entryRelationship typeCode="SUBJ" inversionInd="true">
 								<act classCode="ACT" moodCode="INT">
-									<id extension="2802621602056" root="1.7.5.1"/>
-									<id extension="AMLOTENS TAB 10MG/TAB BTx30 (BLISTER 3x10)" root="1.7.5.2"/>
-									<id extension="7.41" root="1.8.5.1"/>
-									<id extension="9.69" root="1.8.6.1"/>
-									<id extension="7.27" root="1.8.7.1"/>
-									<id extension="7.41" root="1.8.5.2"/>
-									<id extension="9.69" root="1.8.6.2"/>
-									<id extension="7.27" root="1.8.7.2"/>
-									<id extension="5.38" root="1.8.5.3"/>
-									<id extension="4.77" root="1.8.5.4"/>
-									<id extension="0" root="1.8.5.5"/>
-									<id extension="4.68" root="1.8.5.6"/>
-									<id extension="1" root="1.9.5.1"/>
-									<id extension="G" root="1.9.6.1"/>
-									<id extension="1" root="1.9.6.2"/>
-									<id extension="0" root="1.9.7.1"/>
-									<code nullFlavor="NA"/>
+									<templateId root="2.16.840.1.113883.10.20.1.43"/>
+									<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.3.1"/>
+									<code code="FINSTRUCT" codeSystem="1.3.6.1.4.1.19376.1.5.3.2" codeSystemName="IHEActCode"/>
+									<text>
+										<reference value="#med_notes_2"/>
+									</text>
+									<statusCode code="completed"/>
 								</act>
 							</entryRelationship>
 							<entryRelationship typeCode="SPRT">
 								<act classCode="ACT" moodCode="EVN">
 									<templateId root="2.16.840.1.113883.10.12.301"/>
 									<id extension="1" root="1.4.15"/>
-									<id extension="25.0" root="1.4.18"/>
-									<id extension="1" root="1.4.19"/>
-									<id extension="60703" root="1.4.22"/>
-									<id extension="1" root="1.4.23"/>
+									<id extension="8.5" root="1.4.17"/>
+									<id extension="10.0" root="1.4.18"/>
+									<id extension="0" root="1.4.19"/>
+									<id extension="0.85" root="1.4.20"/>
+									<id extension="1.12" root="1.4.21"/>
+									<id extension="1.12" root="1.4.21.1"/>
+									<id extension="0.0" root="1.4.21.3"/>
+									<id extension="2050" root="1.4.22"/>
+									<id extension="0" root="1.4.23"/>
 									<id extension="1" root="1.9.6.2"/>
 									<code nullFlavor="NA"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="SPRT">
+								<act classCode="ACT" moodCode="EVN">
+									<id extension="0" root="2.10.5"/>
+									<id extension="1" root="2.10.6"/>
+									<id extension="1" root="2.10.8"/>
+									<id extension="4.25" root="2.10.9"/>
+									<id extension="4.81" root="2.10.11"/>
+									<id extension="4.25" root="2.10.10"/>
+									<id extension="200107277845" root="2.10.12"/>
+									<id extension="0.0" root="1.4.21.2"/>
+									<code nullFlavor="NA"/>
+									<effectiveTime value="20220203110314"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="SPRT">
+								<act classCode="ACT" moodCode="EVN">
+									<id extension="0" root="2.10.5"/>
+									<id extension="1" root="2.10.6"/>
+									<id extension="1" root="2.10.8"/>
+									<id extension="4.25" root="2.10.9"/>
+									<id extension="4.81" root="2.10.11"/>
+									<id extension="4.25" root="2.10.10"/>
+									<id extension="200107277844" root="2.10.12"/>
+									<id extension="0.0" root="1.4.21.2"/>
+									<code nullFlavor="NA"/>
+									<effectiveTime value="20220203110314"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="REFR">
+								<act classCode="INFRM" moodCode="EVN">
+									<code nullFlavor="NA"/>
+									<entryRelationship typeCode="RSON">
+										<observation classCode="OBS" moodCode="EVN">
+											<templateId root="2.16.840.1.113883.10.20.1.28"/>
+											<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5"/>
+											<code code="282291009" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.42.23" codeSystemName="SNOMED-CT" displayName="Diagnosis interpretation"/>
+											<text>Γαστρικό έλκος</text>
+											<statusCode code="completed"/>
+											<value xsi:type="CD" code="K25" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.2" codeSystemName="ICD10" displayName="Γαστρικό έλκος"/>
+										</observation>
+									</entryRelationship>
+								</act>
+							</entryRelationship>
+						</substanceAdministration>
+					</entry>
+					<entry>
+						<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.2"/>
+						<substanceAdministration classCode="SBADM" moodCode="INT">
+							<templateId root="2.16.840.1.113883.10.20.1.24"/>
+							<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.2"/>
+							<id extension="22013171" root="1.21.1"/>
+							<statusCode code="active"/>
+							<effectiveTime xsi:type="IVL_TS">
+								<low nullFlavor="UNK"/>
+								<high nullFlavor="UNK"/>
+							</effectiveTime>
+							<effectiveTime xsi:type="PIVL_TS" operator="A">
+								<period value="6" unit="h"/>
+							</effectiveTime>
+							<doseQuantity>
+								<low value="3.5" unit="ΔΙΣΚΙΑ_"/>
+								<high value="3.5" unit="ΔΙΣΚΙΑ_"/>
+							</doseQuantity>
+							<rateQuantity>
+								<low value="30" unit="d"/>
+								<high value="30" unit="d"/>
+							</rateQuantity>
+							<consumable>
+								<manufacturedProduct classCode="MANU">
+									<templateId root="1.3.6.1.4.1.12559.11.10.1.3.1.3.1"/>
+									<templateId root="2.16.840.1.113883.10.20.1.53"/>
+									<manufacturedMaterial>
+										<code code="200920102" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="MESULID TAB 100MG/TAB BTX30 (BLIST 3X10)">
+											<originalText>
+												<reference value="#med_barcode_3"/>
+											</originalText>
+										</code>
+										<name>MESULID TAB 100MG/TAB BTX30 (BLIST 3X10)</name>
+										<epsos:desc>100MG/TAB</epsos:desc>
+										<epsos:formCode code="TAB" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="TAB">
+											<epsos:translation displayName="ΔΙΣΚΙΑ_"/>
+										</epsos:formCode>
+										<epsos:asContent classCode="CONT">
+											<epsos:containerPackagedMedicine classCode="CONT" determinerCode="KIND">
+												<epsos:name>MESULID TAB 100MG/TAB BTX30 (BLIST 3X10)</epsos:name>
+												<epsos:formCode code="BTX30_(BLIST_3X10)" codeSystem="1.3.6.1.4.1.12559.11.10.1.3.1.44.1" codeSystemName="EDQM" displayName="BTX30_(BLIST_3X10)"/>
+												<epsos:capacityQuantity value="30"/>
+												<epsos:capTypeCode nullFlavor="NA"/>
+											</epsos:containerPackagedMedicine>
+										</epsos:asContent>
+										<epsos:ingredient classCode="ACTI">
+											<epsos:quantity>
+												<epsos:numerator value="0" unit="0" xsi:type="epsos:PQ"/>
+												<epsos:denominator value="0" unit="0" xsi:type="epsos:PQ"/>
+											</epsos:quantity>
+											<epsos:ingredient classCode="MMAT" determinerCode="KIND">
+												<epsos:code code="M01AX17" codeSystem="0.0.0.0.0.0.0.0.0" codeSystemName="EOF" displayName="NIMESULIDE"/>
+												<epsos:name>NIMESULIDE</epsos:name>
+											</epsos:ingredient>
+										</epsos:ingredient>
+									</manufacturedMaterial>
+								</manufacturedProduct>
+							</consumable>
+							<entryRelationship typeCode="COMP">
+								<supply classCode="SPLY" moodCode="RQO">
+									<independentInd value="false"/>
+									<quantity value="2" unit="1"/>
+								</supply>
+							</entryRelationship>
+							<entryRelationship typeCode="SUBJ" inversionInd="true">
+								<act classCode="ACT" moodCode="INT">
+									<templateId root="2.16.840.1.113883.10.20.1.43"/>
+									<templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.3.1"/>
+									<code code="FINSTRUCT" codeSystem="1.3.6.1.4.1.19376.1.5.3.2" codeSystemName="IHEActCode"/>
+									<text>
+										<reference value="#med_notes_3"/>
+									</text>
+									<statusCode code="completed"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="SPRT">
+								<act classCode="ACT" moodCode="EVN">
+									<templateId root="2.16.840.1.113883.10.12.301"/>
+									<id extension="1" root="1.4.15"/>
+									<id extension="2.8" root="1.4.17"/>
+									<id extension="25.0" root="1.4.18"/>
+									<id extension="1" root="1.4.19"/>
+									<id extension="0.7" root="1.4.20"/>
+									<id extension="1.21" root="1.4.21"/>
+									<id extension="1.21" root="1.4.21.1"/>
+									<id extension="0.0" root="1.4.21.3"/>
+									<id extension="827" root="1.4.22"/>
+									<id extension="4.01" root="1.8.5.1"/>
+									<id extension="3.93" root="1.8.7.1"/>
+									<id extension="2.8" root="1.8.5.2"/>
+									<id extension="2.75" root="1.8.7.2"/>
+									<id extension="0" root="1.4.23"/>
+									<id extension="1" root="1.9.6.2"/>
+									<code nullFlavor="NA"/>
+								</act>
+							</entryRelationship>
+							<entryRelationship typeCode="SPRT">
+								<act classCode="ACT" moodCode="EVN">
+									<id extension="0" root="2.10.5"/>
+									<id extension="1" root="2.10.6"/>
+									<id extension="1" root="2.10.8"/>
+									<id extension="2.8" root="2.10.9"/>
+									<id extension="4.01" root="2.10.11"/>
+									<id extension="2.8" root="2.10.10"/>
+									<id extension="170366230803" root="2.10.12"/>
+									<id extension="0.0" root="1.4.21.2"/>
+									<code nullFlavor="NA"/>
+									<effectiveTime value="20220203110314"/>
 								</act>
 							</entryRelationship>
 							<entryRelationship typeCode="REFR">
