@@ -1016,22 +1016,24 @@ namespace xml
 
 
             var duplicateexc = from med in medicine
-                         
-                         from exc in med.MedExecutions
-                         //group exc by exc.execution_number  into g
-                         select new {
+
+                               from exc in med.MedExecutions
+                               
+                               //group exc by exc.execution_number  into g
+                               select new {
                              number = exc.execution_number
                             ,date = exc.execution_date
                             ,medicins = new dispensed_medicines
                             {
                                 barcode=med.Barcode
-                               ,quanity= med.MedExecutions.Count().ToString()
-                               , lots=exc.lot_numbers
-                               
+                               ,quanity= med.MedExecutions.Count(c=>c.execution_date== exc.execution_date).ToString()
+                               ,
+                                lots=  new List<string> {exc.lot_numbers }
+
                                , retail_price=exc.retail_price
                                
                                ,refernce_price=exc.reference_price
-
+                               
                                ,participation_price= med.MedExecutionInfo.participation_price
                                 
                                , insurance_difference= med.MedExecutionInfo.patient_difference
@@ -1042,23 +1044,60 @@ namespace xml
 
             var executions = (from med in duplicateexc
 
-                           group med by new { med.number, med.date }
+                              group med by new { med.number, med.date }
                         into g
-                         select new Executions
-                         {
-                             date = g.Key.date
-                            ,
-                             number = g.Key.number
+                              select new Executions
+                              {
+                                  date = g.Key.date
+                                 ,
+                                  number = g.Key.number
 
-                             ,
-                             medicines = g.Select(c=>c.medicins).GroupBy(x => x.barcode).Select(x => x.FirstOrDefault()).ToList()
-                         }).OrderBy(c=>c.number).ToList();
+                                  ,
+                                  medicines = g.Select(c => c.medicins)
+                                                .GroupBy(x => x.barcode).
+                                                 Select(x =>
+                                                      new dispensed_medicines
+                                                     {
+                                                         barcode = x.FirstOrDefault().barcode
+                                
+                                                        , quanity = x.FirstOrDefault().quanity
+                                
+                                                        , lots = x.SelectMany(c=>c.lots).ToList()
+
+                                
+                                                       ,  retail_price = x.FirstOrDefault().retail_price
+
+                                
+                                                       ,  refernce_price = x.FirstOrDefault().refernce_price
+
+                                
+                                                        , participation_price = x.FirstOrDefault().participation_price
+
+                               
+                                                       ,  insurance_difference = x.FirstOrDefault().insurance_difference
+                                                      })  .ToList()
+                                                    }).OrderBy(c => c.number).ToList();
+            //new dispensed_medicines
+            //{
+            //    barcode = c.medicins.barcode
+            // , quanity = c.medicins.quanity
+            // , lots = c.medicins.lots.ToList()
+            // , retail_price = c.medicins.retail_price
+            // , refernce_price = c.medicins.refernce_price
+            // , participation_price = c.medicins.participation_price
+            //   ,
+            //    insurance_difference= c.medicins.insurance_difference
+            //}
 
 
-            
 
 
-          var asdas = new ClinicalDocument
+
+
+
+
+
+            var asdas = new ClinicalDocument
             {
                 Patient = patient
                 ,
@@ -1268,7 +1307,7 @@ namespace xml
         {
             public string barcode { get; set; }
             public string quanity { get; set; }
-            public string lots { get; set; }
+            public List<string> lots { get; set; }
             public string retail_price { get; set; }
             public string refernce_price { get; set; }
 
