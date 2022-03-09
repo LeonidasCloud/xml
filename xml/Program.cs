@@ -19,7 +19,9 @@ namespace xml
                 (path);
             XNamespace ns = "urn:hl7-org:v3";
             XNamespace epsos = "urn:epsos-org:ep:medication";
-           
+
+
+            var sdafd = document.Elements("ApiError").Select(c=> c.Element("description").Value);
 
             var patient = document.Descendants(ns + "patientRole")
                             .Select(patie => new Patient
@@ -61,27 +63,25 @@ namespace xml
 
 
                                 ,
-                                InsuranceLastUpdateDT = 
+                                InsuranceLastUpdateDT =
 
-                                                        DateTime.ParseExact(
+                                                        StrtoDt(
                                                           patie.Elements(ns + "id")
                                                          .Where(n => (string)n.Attribute("root") == "1.30.1")
                                                          .Select(n => n.Attribute("extension").Value)
-                                                         ?.FirstOrDefault() ?? "00010101120000"
-                                                         , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                                         .FirstOrDefault() )
 
 
                                                     
 
                                ,
-                                InsuranceExpirationDT = 
+                                InsuranceExpirationDT =
 
-                                                       DateTime.ParseExact(
+                                                        StrtoDt(
                                                           patie.Elements(ns + "id")
                                                          .Where(n => (string)n.Attribute("root") == "1.30.2")
                                                          .Select(n => n.Attribute("extension").Value)
-                                                         ?.FirstOrDefault() ?? "00010101120000"
-                                                         , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                                         .FirstOrDefault() )
 
                                                         
 
@@ -113,15 +113,14 @@ namespace xml
                                              .FirstOrDefault()?.Replace("tel:+","")
 
                                 
-                                ,Birthday =             
+                                ,Birthday =
 
 
-                                                         DateTime.ParseExact(
+                                                          StrtoDt(
                                                          patie.Elements(ns + "patient")
                                                               .Elements(ns + "birthTime")
                                                               .Select(n => n.Attribute("value").Value)
-                                                              ?.FirstOrDefault() ?? "00010101120000"
-                                                            , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                                              .FirstOrDefault() )
 
                                                          
 
@@ -152,11 +151,10 @@ namespace xml
                         .Select(doc => new Doctor
                         {
                             RetrieveTime =
-                                            DateTime.ParseExact(
-                                              doc.Elements(ns + "time")
+
+                                            StrtoDt(  doc.Elements(ns + "time")
                                                 .Select(n => n.Attribute("value").Value)
-                                                ?.FirstOrDefault() ?? "00010101120000"
-                                                , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                                .FirstOrDefault().ToString() )
 
 
                            ,
@@ -304,27 +302,25 @@ namespace xml
 
                            ,
                            
-                           TimeLow = 
-                                                 DateTime.ParseExact(
+                           TimeLow =
+                                                  StrtoDtime(
                                                           vi.Elements(ns + "encompassingEncounter")
                                                                .Elements(ns + "effectiveTime")
                                                                .Elements(ns + "low")
                                                                .Select(n => n.Attribute("value").Value)
-                                                               ?.FirstOrDefault() ?? "00010101120000"
-                                                             , "yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+                                                               .FirstOrDefault())
                                                           
 
 
 
                             ,
                           
-                                TimeHigh =                 DateTime.ParseExact(
+                                TimeHigh =           StrtoDtime(
                                                           vi.Elements( "encompassingEncounter")
                                                                .Elements(ns + "effectiveTime")
                                                                .Elements(ns + "high")
                                                                .Select(n => n.Attribute("value").Value )
-                                                               ?.FirstOrDefault()?? "00010101120000"
-                                                             , "yyyyMMddHHmmss", CultureInfo.InvariantCulture) 
+                                                               .FirstOrDefault())
                                                           
                        }
                        )
@@ -349,24 +345,20 @@ namespace xml
                                                            .FirstOrDefault()
 
                                             
-                                           ,time_low = DateTime.ParseExact(
+                                           ,time_low =  StrtoDt(
                                                              Pr.Elements(ns + "effectiveTime")
                                                              .Elements(ns + "low")
                                                            .Select(c => (string)c.Attribute("value"))?
-                                                           .FirstOrDefault()??
-                                                                 "00010101120000"
-                                                             , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                                           .FirstOrDefault())
 
 
 
                                            ,
-                                            time_high = DateTime.ParseExact(
+                                            time_high = StrtoDt(
                                                              Pr.Elements(ns + "effectiveTime")
                                                              .Elements(ns + "high")
                                                            .Select(c => (string)c.Attribute("value"))?
-                                                           .FirstOrDefault() ??
-                                                                 "00010101"
-                                                             , "yyyyMMdd", CultureInfo.InvariantCulture)
+                                                           .FirstOrDefault())
 
 
                                                            
@@ -518,7 +510,7 @@ namespace xml
                                            
                                           
                                             ,commercial_notes = Pr.Elements(ns + "id")
-                                                                 .Where(n => (string)n.Attribute("root") == "1.1.3.2")
+                                                                 .Where(n => (string)n.Attribute("root") == "1.1.3.3")
                                                                  .Select(c => (string)c.Attribute("extension"))
                                                                  .FirstOrDefault()
                                               
@@ -643,6 +635,242 @@ namespace xml
 
                                         }
                                         ).FirstOrDefault();
+
+
+            // var asafsad = 
+            var barcode = document.Descendants(ns + "substanceAdministration")
+                                    .Elements(ns + "entryRelationship")
+                                    .Elements(ns + "act")
+                                    .Elements(ns + "entryRelationship")
+                                    .Elements(ns + "act")
+                                    .Elements(ns + "id")
+                                    .Where(n => (string)n.Attribute("root") == "1.8.5.1");
+                                     
+
+
+
+
+
+
+
+
+            //.Elements(ns + "id")
+            //.Where(c => (string)c.Attribute("root") == "1.7.5.1");
+            //.Select(c => c.Attribute("extension").Value).Where(c=>c.Attribute("id"));
+
+
+            //.Where(n => n.Attribute("root").Value == "1.7.5.1")
+            //.Select(c => c.Attribute("extension").Value)
+            //.FirstOrDefault()
+            //       );
+            //.Where(c => (string)c.Element(ns + "id") == "1.7.5.1");
+
+            //  .Elements(ns + "id").FirstOrDefault();
+            // .Elements(ns + "id");
+            // .Where(c => (string)c.Attribute("root") == "1.7.5.1")
+            // .Select(c => (string)c.Attribute("extension")?).FirstOrDefault();    
+
+            // ;
+
+            // .Where(c => c.Attribute("root")?.Value == "1.7.5.1");
+
+
+
+            var galenic = (from p in document.Descendants(ns + "substanceAdministration")
+                          select new
+                          {
+
+                     lineid = p.Element(ns+"id")?.Attribute("extension")?.Value,
+
+
+                     quanity = p.Elements(ns+ "entryRelationship").Elements(ns + "supply").Elements(ns + "quantity").FirstOrDefault().Attribute("value").Value,
+
+                     pharmaceutical_desc = p.Elements(ns + "entryRelationship")
+                                                 .Elements(ns + "act").Elements(ns + "id")
+                                                 .Where(c=> c.Attribute("root").Value== "1.7.1.1")
+                                                 .Select(c=> c.Attribute("extension").Value).FirstOrDefault(),
+
+                   galenical_quantity= p.Elements(ns + "entryRelationship")
+                                              .Elements(ns + "act").Elements(ns + "id")?
+                                                 .Where(c => c.Attribute("root")?.Value == "1.7.1.15")
+                                                 .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+
+
+                    galenical_quantity_unit = p.Elements(ns + "entryRelationship")
+                                                 .Elements(ns + "act").Elements(ns + "id")?
+                                                 .Where(c => c.Attribute("root")?.Value == "1.7.1.16")
+                                                 .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+                   galenical_custom_desc = p.Elements(ns + "entryRelationship")
+                                                 .Elements(ns + "act").Elements(ns + "id")?
+                                                 .Where(c => c.Attribute("root")?.Value == "1.7.1.43")
+                                                 .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+                  active_substance = p.Elements(ns + "entryRelationship")
+                                            .Elements(ns + "act").Elements(ns + "id")?
+                                            .Where(c => c.Attribute("root")?.Value == "1.4.25")
+                                            .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                  form_code = p.Elements(ns + "entryRelationship")
+                                        .Elements(ns + "act").Elements(ns + "id")?
+                                        .Where(c => c.Attribute("root")?.Value == "1.4.26")
+                                        .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+                  content = p.Elements(ns + "entryRelationship")
+                                         .Elements(ns + "act").Elements(ns + "id")?
+                                         .Where(c => c.Attribute("root")?.Value == "1.4.27")
+                                         .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                    commercial_name = p.Elements(ns + "entryRelationship")
+                            .Elements(ns + "act").Elements(ns + "id")?
+                            .Where(c => c.Attribute("root")?.Value == "1.4.29")
+                            .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                    dose_unit = p.Elements(ns + "entryRelationship")
+                            .Elements(ns + "act").Elements(ns + "id")?
+                            .Where(c => c.Attribute("root")?.Value == "1.4.29")
+                            .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                      pharm_dose_unit = p.Elements(ns + "entryRelationship")
+                            .Elements(ns + "act").Elements(ns + "id")?
+                            .Where(c => c.Attribute("root")?.Value == "1.4.30")
+                            .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     pharm_content = p.Elements(ns + "entryRelationship")
+                            .Elements(ns + "act").Elements(ns + "id")?
+                            .Where(c => c.Attribute("root")?.Value == "1.4.31")
+                            .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                      package = p.Elements(ns + "entryRelationship")
+                        .Elements(ns + "act").Elements(ns + "id")?
+                        .Where(c => c.Attribute("root")?.Value == "1.4.32")
+                        .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+
+                    unit_price = p.Elements(ns + "entryRelationship")
+                        .Elements(ns + "act").Elements(ns + "id")?
+                        .Where(c => c.Attribute("root")?.Value == "1.4.33")
+                        .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                      participation_percentage = p.Elements(ns + "entryRelationship")
+                        .Elements(ns + "act").Elements(ns + "id")?
+                        .Where(c => c.Attribute("root")?.Value == "1.4.18")
+                        .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                       remaining_quantity = p.Elements(ns + "entryRelationship")
+                        .Elements(ns + "act").Elements(ns + "id")?
+                        .Where(c => c.Attribute("root")?.Value == "1.4.19")
+                        .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                      participation_price = p.Elements(ns + "entryRelationship")
+                        .Elements(ns + "act").Elements(ns + "id")?
+                        .Where(c => c.Attribute("root")?.Value == "1.4.20")
+                        .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     patient_difference = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.21")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     total_difference = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.21.1")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                    similar_list_id = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.22")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     replace_medicine = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.23")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                 prescription_illness_id = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.24")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     prescription_illness_desc = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.24.1")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     proposed_illness_perc = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.24.2")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                   genetic = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.4.15")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                       retail_price = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.8.5.1")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     reference_price = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.8.5.2")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     wholesale_price = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.8.5.3")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                   hospital = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.8.5.5")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                   prgn = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.9.6.1")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                    cluster_with_genetic = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.9.6.2")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     participation_discount = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.9.7.1")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                     pop_up = p.Elements(ns + "entryRelationship")
+                     .Elements(ns + "act").Elements(ns + "id")?
+                     .Where(c => c.Attribute("root")?.Value == "1.9.7.2")
+                     .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
+
+                  sepecial_info = 
+                                 new
+                                {
+                                  type="MEDI",
+                                  
+                                   similar_medicines=
+                                   new
+                                   {
+                                       barcode = p.Elements(ns + "entryRelationship")
+                                                   .Elements(ns + "act")
+                                                   .Elements(ns + "entryRelationship")
+                                                   .Elements(ns + "act")
+                                                   .Where(n => (string)n.Attribute("classCode") == "ACT")
+                                                 
+                                                    .Where(c => c.Attribute("root")?.Value == "1.7.5.1")
+                                                    .Select(c => c.Attribute("extension")?.Value).ToList(),
+                                   }
+
+                                 }
+                                    
+
+                                            
+                          
+
+                          }).ToList();
+
 
 
 
@@ -1018,29 +1246,37 @@ namespace xml
             var duplicateexc = from med in medicine
 
                                from exc in med.MedExecutions
-                               
-                               //group exc by exc.execution_number  into g
-                               select new {
-                             number = exc.execution_number
-                            ,date = exc.execution_date
-                            ,medicins = new dispensed_medicines
-                            {
-                                barcode=med.Barcode
-                               ,quanity= med.MedExecutions.Count(c=>c.execution_date== exc.execution_date).ToString()
+
+                                   //group exc by exc.execution_number  into g
+                               select new
+                               {
+                                   number = exc.execution_number
+                            ,
+                                   date = exc.execution_date
+                            ,
+                                   medicins = new dispensed_medicines
+                                   {
+                                       barcode = med.Barcode
                                ,
-                                lots=  new List<string> {exc.lot_numbers }
+                                       quanity = med.MedExecutions.Count(c => c.execution_date == exc.execution_date).ToString()
+                               ,
+                                       lots = new List<string> { exc.lot_numbers }
 
-                               , retail_price=exc.retail_price
-                               
-                               ,refernce_price=exc.reference_price
-                               
-                               ,participation_price= med.MedExecutionInfo.participation_price
-                                
-                               , insurance_difference= med.MedExecutionInfo.patient_difference
-                            }
+                               ,
+                                       retail_price = exc.retail_price
+
+                               ,
+                                       refernce_price = exc.reference_price
+
+                               ,
+                                       participation_price = med.MedExecutionInfo.participation_price
+
+                               ,
+                                       insurance_difference = med.MedExecutionInfo.patient_difference
+                                   }
 
 
-                         };
+                               };
 
             var executions = (from med in duplicateexc
 
@@ -1136,15 +1372,28 @@ namespace xml
 
         }
 
+        private static string StrtoDt(string date="19010101")
+        {
+            if (date == null)
+                return null;
 
-        
+            return DateTime.ParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture).ToString().Replace("T"," ");
+        }
+
+        private static string StrtoDtime(string date )
+        {
+            if (date == null)
+                return null;
+
+            return DateTime.ParseExact(date, "yyyyMMddHHmmss", CultureInfo.InvariantCulture).ToString().Replace("T", " ");
+        }
 
         public class Prescription
         {
             public string status { get; set; }
-            public DateTime time_low { get; set; }
+            public string time_low { get; set; }
 
-            public DateTime time_high { get; set; }
+            public string time_high { get; set; }
 
             public string prescription_id { get; set; }
             public string type { get; set; }
@@ -1405,14 +1654,14 @@ namespace xml
             public string InsuranceType { get; set; }
             public string Ama { get; set; }
            
-            public DateTime? InsuranceLastUpdateDT { get; set; }
-            public DateTime? InsuranceExpirationDT { get; set; }
+            public string InsuranceLastUpdateDT { get; set; }
+            public string InsuranceExpirationDT { get; set; }
 
             public FullAddress fulladdress { get; set; }
             public string Phone { get; set; }
             public string Email { get; set; }
         
-            public DateTime? Birthday { get; set; }
+            public string Birthday { get; set; }
             public string LanguageCode { get; set; }
             public string gender { get; set; }
 
@@ -1421,7 +1670,7 @@ namespace xml
         public class Doctor
         {
 
-            public DateTime RetrieveTime { get; set; }
+            public string RetrieveTime { get; set; }
             public string Id { get; set; }
             public string Amka { get; set; }
             public string Etaa { get; set; }
@@ -1447,8 +1696,8 @@ namespace xml
             public string Reason { get; set; }
             public string EncounterInLimit { get; set; }
             public string Status { get; set; }
-            public DateTime? TimeLow { get; set; }
-            public DateTime? TimeHigh { get; set; }
+            public string TimeLow { get; set; }
+            public string TimeHigh { get; set; }
         }
 
 
