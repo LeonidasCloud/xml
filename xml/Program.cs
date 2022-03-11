@@ -868,351 +868,202 @@ namespace xml
                       .Where(c => c.Attribute("root")?.Value == "1.9.7.2")
                       .Select(c => c.Attribute("extension")?.Value).FirstOrDefault(),
 
-                               sepecial_info = new object[]
-                               {
-                                 new
-                                {
-                                  type="MEDI",
-
-                                   similar_medicines=
-                                             (from c in p.Elements(ns + "entryRelationship")
-                                                        .Where(c => c.Attribute("typeCode").Value == "SUBJ")
-                                                     .Descendants(ns + "act")
-                                                     .Elements(ns + "entryRelationship")
-                                                     .Where(c => c.Attribute("typeCode").Value == "REFR")
-                                                     .Descendants(ns + "act")
-                                select
-                                   new
-                                   {
-
-                                       barcode =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.7.5.1")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                     ,  name =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.7.5.2")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                     ,
-                                       retail_price =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.8.5.1")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-                                    , reference_price =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.8.5.2")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                     , wholesale_price =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.8.5.3")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                     ,
-                                       hospital =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.8.5.5")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                       ,
-                                       hospital_price =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.8.5.6")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                     ,
-                                       lower_price_bool =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.9.5.1")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                      , prgn =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.9.6.1")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-                                     ,  cluster_with_genetic =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.9.6.2")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-                                      , participation_discount =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.9.7.1")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                                     ,  pop_up =
-                                                     c.Descendants(ns + "id")
-                                                     .Where(c => c.Attribute("root").Value == "1.9.7.2")
-                                                     .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-
-                                   }).ToList()
-                                ,barcode=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.3")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                ,prescription_qty=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.4")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                 ,use_qty=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.5")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                 ,measure_unit=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.6")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                 ,pharma_notes=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.7")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                               ,proposal= p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.8")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-                            ,percentage=      p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                               .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.10")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                            ,retail_name=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.11")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                            ,med_price=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.12")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                           ,reference_price=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.13")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                            ,treatment_id=p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "MEDI"))
-                                                .Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.17")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-                                },
-
-                         (from c in p.Elements(ns + "entryRelationship")
-                                            .Elements(ns + "act")
-                                                .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                                .Elements(ns + "entryRelationship")
-                                                .Elements(ns + "observation")
-                                                .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "ACTS"))
-
-                           select new
-                           {
-                               type="ACTS"
-                               ,prescription_qty=
-                                                    c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.4")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                 ,use_qty=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.5")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                 ,measure_unit=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.6")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                                 ,pharma_notes=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.7")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-                            ,percentage=
-                                                c.Descendants(ns + "templateId")
-
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.10")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                          ,substance_desc=
-                                               c.Descendants(ns + "templateId")
-
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.9")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                            ,treatment_id=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.17")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-
-
-                           }),
-                              (from c in p.Elements(ns + "entryRelationship")
-                             .Elements(ns + "act")
-                                 .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                 .Elements(ns + "entryRelationship")
-                                 .Elements(ns + "observation")
-                                 .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "PACK"))
-                              select new
-                           {
-                               type="PACK"
-                               ,prescription_qty=
-                                               c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.4")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-
-
-                            ,percentage=  
-                                                c.Descendants(ns + "templateId")
-
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.10")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-                            ,treatment_id=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.17")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                               , pharma_id=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.20")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-                           }),
-                      (from c in p.Elements(ns + "entryRelationship")
-                             .Elements(ns + "act")
-                                 .Where(c => c.Attribute("classCode").Value == "INFRM")
-                                 .Elements(ns + "entryRelationship")
-                                 .Elements(ns + "observation")
-                                 .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("extension") == "RAMA"))
-                              select new
-                           {
-                               type="RAMA"
-
-                               ,prescription_qty=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.4")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                             ,use_qty=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.5")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                              ,measure_unit=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.6")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-                          ,pharma_notes=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.7")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-                               ,substance_desc=
-                                                c.Descendants(ns + "templateId")
-                                                 .Where(c => c.Attribute("root").Value == "1.7.1.9")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-                            ,percentage=
-                                                c.Descendants(ns + "templateId")
-
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.10")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-                            ,treatment_id=
-                                                c.Descendants(ns + "templateId")
-                                                .Where(c => c.Attribute("root").Value == "1.7.1.17")
-                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
-
-
-
-
-                           })
-
-                            }
-
-
-                           });
-
-
-
-            
+
+
+                               sepecial_info =  
+                                        new []
+                                       {
+                                              from d in p.Elements(ns + "entryRelationship")
+                                                     .Elements(ns + "act")
+                                                         .Where(c => c.Attribute("classCode").Value == "INFRM")
+                                                         .Elements(ns + "entryRelationship")
+                                                         .Elements(ns + "observation")
+                                                         .Where (d=> d.Elements(ns + "templateId").Any(c=> (string)c.Attribute("root") == "1.7.1.2"))
+                                             select new 
+                                             {
+
+                                                   type=
+                                                                 d.Descendants(ns + "templateId")
+                                                                 .Where(c => c.Attribute("root").Value == "1.7.1.2")
+                                                                 .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                 ,barcode=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.3")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                , prescription_qty=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.4")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                , use_qty=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.5")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                 ,measure_unit=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.6")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                , pharma_notes=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.7")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                , proposal=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.8")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                , substance_desc=
+                                                        d.Descendants(ns + "templateId")
+                                                        .Where(c => c.Attribute("root").Value == "1.7.1.9")
+                                                        .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                , percentage=
+                                                                 d.Descendants(ns + "templateId")
+                                                                 .Where(c => c.Attribute("root").Value == "1.7.1.10")
+                                                                 .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                 , retail_name=
+                                                      d.Descendants(ns + "templateId")
+                                                      .Where(c => c.Attribute("root").Value == "1.7.1.11")
+                                                      .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                 , med_price=
+                                                      d.Descendants(ns + "templateId")
+                                                      .Where(c => c.Attribute("root").Value == "1.7.1.12")
+                                                      .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                 , reference_price=
+                                                      d.Descendants(ns + "templateId")
+                                                      .Where(c => c.Attribute("root").Value == "1.7.1.13")
+                                                      .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                
+                                                 , treatment_id=
+                                                      d.Descendants(ns + "templateId")
+                                                      .Where(c => c.Attribute("root").Value == "1.7.1.17")
+                                                      .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                
+                                                 , pharma_id=
+                                                                 d.Descendants(ns + "templateId")
+                                                                 .Where(c => c.Attribute("root").Value == "1.7.1.20")
+                                                                 .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                 ,similar_medicines=( d.Descendants(ns + "templateId")
+                                                                 .Where(c => c.Attribute("root").Value == "1.7.1.2")
+                                                                 .Select(c => c.Attribute("extension").Value).FirstOrDefault().Equals("MEDI")?
+                                                                                (from c in p.Elements(ns + "entryRelationship")
+                                                                                   .Where(c => c.Attribute("typeCode").Value == "SUBJ")
+                                                                                .Descendants(ns + "act")
+                                                                                .Elements(ns + "entryRelationship")
+                                                                                .Where(c => c.Attribute("typeCode").Value == "REFR")
+                                                                                .Descendants(ns + "act")
+                                                                           select
+                                                                              new
+                                                                              {
+
+                                                                                  barcode =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.7.5.1")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                ,  name =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.7.5.2")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                ,
+                                                                                  retail_price =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.8.5.1")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                                                                               , reference_price =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.8.5.2")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                , wholesale_price =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.8.5.3")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                ,
+                                                                                  hospital =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.8.5.5")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                  ,
+                                                                                  hospital_price =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.8.5.6")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                ,
+                                                                                  lower_price_bool =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.9.5.1")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                 , prgn =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.9.6.1")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                                                                                ,  cluster_with_genetic =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.9.6.2")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+                                                                                 , participation_discount =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.9.7.1")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+                                                                                ,  pop_up =
+                                                                                                c.Descendants(ns + "id")
+                                                                                                .Where(c => c.Attribute("root").Value == "1.9.7.2")
+                                                                                                .Select(c => c.Attribute("extension").Value).FirstOrDefault()
+
+
+
+
+                                                                              }).ToList():null
+
+
+                                                                 )
+
+
+
+                                              }
+                                              
+                                            
+
+                                             
+                                             }
+
+
+
+                                      });
+
+           var galenicclean = galenic.Select(x => x.sepecial_info.Select(c=>c.Select(d=>d.)))
+
+         
+
+
+
+
+
+
             var options = new JsonSerializerOptions { WriteIndented = true };
             string jsonString = System.Text.Json.JsonSerializer.Serialize(galenic, options);
 
